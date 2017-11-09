@@ -1,7 +1,8 @@
 module unitComplexity
 
-import lang::java::jdt::m3::Core;
+import LOC;
 
+import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import util::ValueUI;
 import IO;
@@ -16,7 +17,8 @@ void holla(){
 	
 	for(c <- meth){
 		source = readFile(c);
-		println(source);
+		result = countLOC(source);
+		println(result);
 	}
 	
 }
