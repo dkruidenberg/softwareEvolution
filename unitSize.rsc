@@ -10,7 +10,7 @@ import Set;
 import Type;
 
 void calculateSize(loc x){
-	a = createM3FromEclipseProject(x);
+	myModel = createM3FromEclipseProject(x);
 	uses = a.uses;
 	declarations = a.declarations;
 	meth = methods(a);
