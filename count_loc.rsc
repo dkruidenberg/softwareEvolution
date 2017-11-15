@@ -45,8 +45,13 @@ public str filterSingleline(str code){
 		str tmpstr = "";
 		int positionOpening = findFirst(code, "//");
 		int positionClosing = findFirst(code[positionOpening..], "\n") + positionOpening;
-		returncode += code[pos..positionOpening] + "\n";
-		code = code[positionClosing + 1 ..];
+		if(positionClosing == -1){
+			return returncode;
+		}
+		else{
+			returncode += code[pos..positionOpening] + "\n";
+			code = code[positionClosing + 1 ..];
+		}
 	}
 	returncode += code;
 	return returncode;

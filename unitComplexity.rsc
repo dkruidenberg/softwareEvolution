@@ -1,6 +1,6 @@
 module unitComplexity
 
-import LOC;
+import count_loc;
 
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
