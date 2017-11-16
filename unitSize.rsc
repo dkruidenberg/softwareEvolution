@@ -11,9 +11,7 @@ import Type;
 
 void calculateSize(loc x){
 	myModel = createM3FromEclipseProject(x);
-	uses = a.uses;
-	declarations = a.declarations;
-	meth = methods(a);
+	meth = methods(myModel);
 	
 	numberOfMethods = 0;
 	numberOfLines = 0;
@@ -27,4 +25,3 @@ void calculateSize(loc x){
 	println(numberOfLines);
 	
 }
-public set[loc] classes2(M3 m) =  {e,z | <e,z> <- m.declarations, isMethod(e)};
