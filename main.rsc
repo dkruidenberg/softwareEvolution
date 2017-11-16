@@ -15,9 +15,11 @@ void main(){
 	list[list[int]] tmp = calculateComplexityUnitSize(location);
 	list[int] comps = tmp[0];
 	list[int] locs = tmp[1];
-	int cyclom = mapCyclom(comps, locs);
+	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
-	
+	println(unitScore);
+	println(cScore);
+	println(volumeScore);
 }
 
 
@@ -50,20 +52,21 @@ int mapUnitSize(list[int] sizes){
 	mod_size = mod_size / total_loc * 100;
 	high_size = high_size / total_loc * 100;
 	insane_size = insane_size / total_loc * 100;
+	println(mod_size);
+	println(high_size);
+	println(insane_size);
 	return mapUnitSizeHelper(mod_size, high_size, insane_size);
 }
+
 //tresholds from http://www.cs.uu.nl/docs/vakken/apa/20140617-measuringsoftwareproductquality.pdf
 int mapUnitSizeHelper(real modr, real high, real insane){
-	if(modr <= 19.5 && high == 10.9 && insane == 3.9){
+	if(modr <= 19.5 && high <= 10.9 && insane <= 3.9){
 		return 2;
 	}
-	if(modr <= 26.0 && high <= 15.5 && insane == 6.5){
+	if(modr <= 26.0 && high <= 15.5 && insane <= 6.5){
 		return 1;
 	}
-	if(modr <= 34.1 && high <= 22.2 && insane == 11.0){
-		return 0;
-	}
-	if(modr <= 45.9 && high <= 31.3 && insane <= 18.1){
+	if(modr <= 34.1 && high <= 22.2 && insane <= 11.0){
 		return -1;
 	}
 	else{
