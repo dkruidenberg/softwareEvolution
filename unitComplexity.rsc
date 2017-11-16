@@ -12,7 +12,8 @@ void calculateComplexity(){
 	//myModel = createM3FromEclipseProject(|project://smallsql0.21_src|);
 	ast = createAstsFromEclipseProject(|project://smallsql0.21_src|,true);
 	count_if = 0;
-	count_while = 0; 
+	count_while = 0;
+	count_cases = 0; 
 	y = 0;
 	visit(ast){
 		case meth : \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl) : {
@@ -28,8 +29,7 @@ void calculateComplexity(){
 					count_while += 1; 
 				}
 				case myCase : \case(Expression expression):{
-					text(meth);
-					println(myCase);
+					count_cases += 1;
 					return;
 				}
 			}
