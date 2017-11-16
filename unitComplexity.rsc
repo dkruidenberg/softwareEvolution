@@ -8,32 +8,34 @@ import IO;
 import Set;
 import Type;
 import lang::java::\syntax::Java15;
+import count_loc;
 
-int calculateComplexity(){
-	//myModel = createM3FromEclipseProject(|project://smallsql0.21_src|);
-	ast = createAstsFromEclipseProject(|project://smallsql0.21_src|,true);
-	result = 1;
+list[list[int]] calculateComplexityUnitSize(loc location){
+	ast = createAstsFromEclipseProject(location,true);
+	lengths = [];
+	complexities = [];
 	visit(ast){
 		case meth : \method(_, _, _, _, _) : {
+			complexity = 1;
 			loc n = meth.decl;
+			source = readFile(n);
+			lengths += countLOC(source);
 			visit(meth){
-				case \if(Expression condition, Statement thenBranch) : result += 1;
-		        case \if(Expression condition, Statement thenBranch, Statement elseBranch) : result += 1;
-		        case \case(Expression expression) : result += 1;
-		        case \do(Statement body, Expression condition) : result += 1;
-		        case \while(Expression condition, Statement body) : result += 1;
-		        case \for(list[Expression] initializers, Expression condition, list[Expression] updaters, Statement body) : result += 1;
-		        case \for(list[Expression] initializers, list[Expression] updaters, Statement body) : result += 1;
-		        case \foreach(Declaration parameter, Expression collection, Statement body) : result += 1;
-		        case \catch(Declaration exception, Statement body): result += 1;
-		        case \switch(Expression expression, list[Statement] statements): result += 1;
+				case \if(Expression condition, Statement thenBranch) : complexity += 1;
+		        case \if(Expression condition, Statement thenBranch, Statement elseBranch) : complexity += 1;
+		        case \case(Expression expression) : complexity += 1;
+		        case \do(Statement body, Expression condition) : complexity += 1;
+		        case \while(Expression condition, Statement body) : complexity += 1;
+		        case \for(list[Expression] initializers, Expression condition, list[Expression] updaters, Statement body) : complexity += 1;
+		        case \for(list[Expression] initializers, list[Expression] updaters, Statement body) : complexity += 1;
+		        case \foreach(Declaration parameter, Expression collection, Statement body) : complexity += 1;
+		        case \catch(Declaration exception, Statement body): complexity += 1;
+		        case \switch(Expression expression, list[Statement] statements): complexity += 1;
 			}
-			return 0;
+			complexities += complexity;
 		}
 	}
-	println(result);
-	return result;
+	return [complexities,lengths];
 }
-
 
 
