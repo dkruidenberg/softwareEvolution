@@ -7,34 +7,29 @@ import util::ValueUI;
 import IO;
 import Set;
 import Type;
+import lang::java::\syntax::Java15;
 
-void calculateComplexity(){
+int calculateComplexity(){
 	//myModel = createM3FromEclipseProject(|project://smallsql0.21_src|);
 	ast = createAstsFromEclipseProject(|project://smallsql0.21_src|,true);
-	count_if = 0;
-	count_while = 0;
-	count_cases = 0; 
-	y = 0;
+	result = 1;
 	visit(ast){
-		case meth : \method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl) : {
-			y += 1;
+		case meth : \method(_, _, _, _, _) : {
 			visit(meth){
-				case \if(Expression condition, Statement thenBranch):{
-					count_if += 1;
-				}
-				case \if(Expression condition, Statement thenBranch, Statement elseBranch):{
-					count_if += 1;
-				}
-				case \while(Expression condition, Statement body):{
-					count_while += 1; 
-				}
-				case myCase : \case(Expression expression):{
-					count_cases += 1;
-					return;
-				}
+				case \if(Expression condition, Statement thenBranch) : result += 1;
+		        case \if(Expression condition, Statement thenBranch, Statement elseBranch) : result += 1;
+		        case \case(Expression expression) : result += 1;
+		        case \do(Statement body, Expression condition) : result += 1;
+		        case \while(Expression condition, Statement body) : result += 1;
+		        case \for(list[Expression] initializers, Expression condition, list[Expression] updaters, Statement body) : result += 1;
+		        case \for(list[Expression] initializers, list[Expression] updaters, Statement body) : result += 1;
+		        case \foreach(Declaration parameter, Expression collection, Statement body) : result += 1;
+		        case \catch(Declaration exception, Statement body): result += 1;
+		        case \switch(Expression expression, list[Statement] statements): result += 1;
 			}
 		}
 	}
-	println(x);
-	println(y);
+	println(result);
+	return result;
 }
+	
