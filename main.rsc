@@ -16,6 +16,7 @@ void main(){
 	list[int] comps = tmp[0];
 	list[int] locs = tmp[1];
 	int cyclom = mapCyclom(comps, locs);
+	int unitScore =  mapUnitSize(locs);
 	
 }
 
@@ -28,10 +29,28 @@ int mapVolume(int volume){
 	else { return -2; }
 }
 
-int mapUnitSize(){
+int mapUnitSize(list[int] sizes){
+	real mod_size = 0.0;
+	real high_size = 0.0;
+	real insane_size = 0.0;
+	real total_loc = 0.0;
 	
-
-
+	for(n <- sizes){
+		if(n > 30 && n < 44){
+			mod_size += n;
+		}
+		if(n >= 44 && n <= 74){
+			high_size += n;
+		}
+		if(n > 74){
+			insane_size += n;
+		}
+		total_loc += n;
+	}
+	mod_size = mod_size / total_loc * 100;
+	high_size = high_size / total_loc * 100;
+	insane_size = insane_size / total_loc * 100;
+	return mapUnitSizeHelper(mod_size, high_size, insane_size);
 }
 
 int mapUnitSizeHelper(real modr, real high, real insane){
