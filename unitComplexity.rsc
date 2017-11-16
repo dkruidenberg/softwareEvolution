@@ -15,6 +15,7 @@ int calculateComplexity(){
 	result = 1;
 	visit(ast){
 		case meth : \method(_, _, _, _, _) : {
+			loc n = meth.decl;
 			visit(meth){
 				case \if(Expression condition, Statement thenBranch) : result += 1;
 		        case \if(Expression condition, Statement thenBranch, Statement elseBranch) : result += 1;
@@ -27,9 +28,12 @@ int calculateComplexity(){
 		        case \catch(Declaration exception, Statement body): result += 1;
 		        case \switch(Expression expression, list[Statement] statements): result += 1;
 			}
+			return 0;
 		}
 	}
 	println(result);
 	return result;
 }
-	
+
+
+
