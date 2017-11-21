@@ -25,7 +25,7 @@ void countDuplication(){
 		source1 = readFile(x);
 		sourceMethod = split("\n",cleanCode(source1));
 		//only check for methods with size > 6
-		if(size(sourceMethod)>6){
+		if(size(sourceMethod) >= 6){
 			for(y <- meth){
 				//get source of target method
 				source2 = readFile(y);
@@ -34,9 +34,11 @@ void countDuplication(){
 					targetMethod = split("\n",cleanCode(source2));
 					counter = 0;
 					//only check for methods with size > 6
-					if(size(targetMethod) > 6){
+					int targetSize = size(targetMethod);
+					if(targetSize >= 6){
 						for(line <- sourceMethod){
-							if(line in targetMethod){
+							int index = indexOf(targetMethod, line);
+							if((index) != -1 && (index - targetSize >= 6)){
 								println(line);
 							}
 						}
