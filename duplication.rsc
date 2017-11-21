@@ -49,11 +49,16 @@ void countDuplication(){
 								while(sourceMethod[indexSource] == targetMethod[index]){
 									counter += 1;
 									indexSource += 1;
-									index +=1; 
+									index +=1;
+									if(indexSource >= sourceSize-1 || index >= targetSize-1){
+										println("hier");
+										break;
+									}
 								}
 								if(counter >=6){
-									print(slice(sourceMethod, tmpBegin, indexSource));
-									print(slice(targetMethod, tmpBegin2, index));
+									printSection(sourceMethod, tmpBegin, indexSource);
+									println("-------------------------");
+									printSection(targetMethod, tmpBegin2, index);
 									num_duplicates += 1;
 								}
 							}
@@ -70,6 +75,10 @@ void countDuplication(){
 }
 
 
-void printSection(list[str] myList, int start, int end){
-	int a = 4;
+void printSection(list[str] myList, int startAt, int endAt){
+	printString = "";
+	for(n <- slice(myList, startAt, endAt)){
+		printString += n + "\n";
+	}
+	println(printString);
 }
