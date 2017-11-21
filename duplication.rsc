@@ -21,6 +21,7 @@ void countDuplication(){
 	model = createM3FromEclipseProject(project);
 	meth = toList(methods(model));
 	int num_duplicates = 0;
+	int duplicate_lines = 0;
 	tmp = split(meth);
 	first_halve = tmp[0];
 	second_halve = tmp[1];
@@ -68,6 +69,7 @@ void countDuplication(){
 									if(counter >=6){
 										skipLines = counter;
 										num_duplicates += 1;
+										duplicate_lines += counter;
 									}
 								}
 							}
@@ -84,6 +86,8 @@ void countDuplication(){
 			}
 		}
 	}
+	println(num_duplicates);
+	println(duplicate_lines);
 }
 
 // Function for printing the duplicates to check if they were the same
