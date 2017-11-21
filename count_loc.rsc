@@ -11,7 +11,6 @@ public int walkFiles(loc a){
 		if (/\.java/ := entry){
 			str code = readFile(a+entry);
 			num_lines += countLOC(code);
-			cleanCode(code);
 				
 		}
 		elseif (isDirectory(a+entry))
@@ -72,6 +71,7 @@ public int filterNewlines(str code){
 	int num_lines = 0;
 	for(/<sentence: (.*)>[\r\n]/ := code){
 		if (/\S/ := sentence){
+			sentence = trim(sentence);
 			if(size(sentence) > 2){
 				returncode += sentence + "\n";
 				num_lines += 1;
@@ -81,6 +81,8 @@ public int filterNewlines(str code){
 	return num_lines;
 }
 
+// Clean a code string, remove multiline comments, single line comments, newlines, and lines smaller than 2 characters 
+// (we believe }; is not important for mainainability)
 public str cleanCode(str code){
 	code = filterMultiline(code);
 	code = filterSingleline(code);
@@ -88,6 +90,7 @@ public str cleanCode(str code){
 	return code;
 }
 
+// remove newlines from a string and lines shorter than 2 characters
 public str removeNewLines(str code){
 	returncode = "";
 	for(/<sentence: (.*)>[\r\n]/ := code){
