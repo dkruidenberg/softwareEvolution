@@ -32,7 +32,7 @@ void countDuplication(){
 	int counter_y = 0;
 
 	//walk through each method
-	for(x <- first_halve){
+	for(x <- meth){
 		counter_x += 1;
 		progress += step;
 		println(progress);
@@ -41,7 +41,7 @@ void countDuplication(){
 		int sourceSize = size(sourceMethod);
 		//only check for methods with size > 6
 		if(sourceSize >= 6){
-			for(y <- second_halve){
+			for(y <- meth){
 				counter_y += 1;
 				//get source of target method
 				source2 = readFile(y);
