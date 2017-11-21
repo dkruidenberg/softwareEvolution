@@ -11,23 +11,33 @@ import lang::java::\syntax::Java15;
 import count_loc;
 import String;
 import List;
+import Type;
+import Set;
 
 
 void countDuplication(){
 	//Get all the methods of the project
 	loc project = |project://smallsql0.21_src|;
 	model = createM3FromEclipseProject(project);
-	meth = methods(model);
+	meth = toList(methods(model));
 	int num_duplicates = 0;
+	tmp = split(meth);
+	first_halve = tmp[0];
+	second_halve = tmp[1];
+	int allMethSize = size(first_halve);
+	real progress = 0.0;
+	real step = 1.0 / allMethSize;
 	
 	//walk through each method
-	for(x <- meth){
+	for(x <- first_halve){
+		progress += step;
+		println(progress);
 		source1 = readFile(x);
 		sourceMethod = split("\n",cleanCode(source1));
 		int sourceSize = size(sourceMethod);
 		//only check for methods with size > 6
 		if(sourceSize >= 6){
-			for(y <- meth){
+			for(y <- second_halve){
 				//get source of target method
 				source2 = readFile(y);
 				if(source1 != source2){
@@ -37,30 +47,32 @@ void countDuplication(){
 					int targetSize = size(targetMethod);
 					if(targetSize >= 6){
 						int sourceLineCounter = 0;
-						
+						int skipLines = 0;
 						for(line <- sourceMethod){
-							int index = indexOf(targetMethod, line);
 							
-							if((index) != -1 && (targetSize - index >= 6)){
-								int indexSource = sourceLineCounter;
-								int counter = 0;
-								int tmpBegin = sourceLineCounter;
-								int tmpBegin2 = index;
-								while(sourceMethod[indexSource] == targetMethod[index]){
-									counter += 1;
-									indexSource += 1;
-									index +=1;
-									if(indexSource >= sourceSize-1 || index >= targetSize-1){
-										println("hier");
-										break;
+							if(skipLines == 0){
+								int index = indexOf(targetMethod, line);
+								if((index) != -1 && (targetSize - index >= 6)){
+									int indexSource = sourceLineCounter;
+									int counter = 0;
+									int tmpBegin = sourceLineCounter;
+									int tmpBegin2 = index;
+									while(sourceMethod[indexSource] == targetMethod[index]){
+										counter += 1;
+										indexSource += 1;
+										index +=1;
+										if(indexSource >= sourceSize || index >= targetSize){
+											break;
+										}
+									}
+									if(counter >=6){
+										skipLines = counter;
+										num_duplicates += 1;
 									}
 								}
-								if(counter >=6){
-									printSection(sourceMethod, tmpBegin, indexSource);
-									println("-------------------------");
-									printSection(targetMethod, tmpBegin2, index);
-									num_duplicates += 1;
-								}
+							}
+							else{
+								skipLines -= 1;
 							}
 							sourceLineCounter += 1;
 							if(sourceSize - sourceLineCounter < 6){
@@ -74,10 +86,10 @@ void countDuplication(){
 	}
 }
 
-
+// Function for printing the duplicates to check if they were the same
 void printSection(list[str] myList, int startAt, int endAt){
 	printString = "";
-	for(n <- slice(myList, startAt, endAt)){
+	for(n <- slice(myList, startAt, (endAt - startAt))){
 		printString += n + "\n";
 	}
 	println(printString);
