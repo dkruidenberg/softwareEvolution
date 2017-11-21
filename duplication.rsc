@@ -33,7 +33,6 @@ void countDuplication(){
 				if(source1 != source2){
 					//split the methods and trim 
 					targetMethod = split("\n",cleanCode(source2));
-					counter = 0;
 					//only check for methods with size > 6
 					int targetSize = size(targetMethod);
 					if(targetSize >= 6){
@@ -41,7 +40,17 @@ void countDuplication(){
 						for(line <- sourceMethod){
 							int index = indexOf(targetMethod, line);
 							if((index) != -1 && (targetSize - index >= 6)){
-								int a = 0;
+								indexSource = sourceLineCounter;
+								int counter = 0;
+								while(sourceMethod[indexSource] == targetMethod[index]){
+									counter += 1;
+									indexSource += 1;
+									index +=1; 
+								}
+								if(counter >=6){
+									print("duplicate");
+									num_duplicates += 1;
+								}
 							}
 							sourceLineCounter += 1;
 							if(sourceSize - sourceLineCounter < 6){
