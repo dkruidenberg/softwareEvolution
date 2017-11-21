@@ -8,6 +8,7 @@ import lang::java::jdt::m3::AST;
 import util::ValueUI;
 import List;
 import util::Math;
+import duplication;
 
 void main(){
 	loc location = |project://smallsql0.21_src|;
@@ -18,8 +19,10 @@ void main(){
 	list[int] locs = tmp[1];
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
-	int dupScore = 1;
-	// int dupScore = functioe();
+	int dupScore = mapDuplication(toReal(countDuplication(location)) / sum(locs) * 100);
+	println(toReal(countDuplication(location)) / sum(locs) * 100);
+	println(dupScore);
+	overallMap(volumeScore, cScore, dupScore, unitScore);
 }
 
 // Map the duplication scores
@@ -88,9 +91,6 @@ int mapUnitSize(list[int] sizes){
 	mod_size = mod_size / total_loc * 100;
 	high_size = high_size / total_loc * 100;
 	insane_size = insane_size / total_loc * 100;
-	println(mod_size);
-	println(high_size);
-	println(insane_size);
 	return mapUnitSizeHelper(mod_size, high_size, insane_size);
 }
 
