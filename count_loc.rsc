@@ -11,7 +11,6 @@ public int walkFiles(loc a){
 		if (/\.java/ := entry){
 			str code = readFile(a+entry);
 			num_lines += countLOC(code);
-				
 		}
 		elseif (isDirectory(a+entry))
 			num_lines += walkFiles(a+entry);
@@ -35,6 +34,9 @@ public str filterMultiline(str code){
 		str tmpstr = "";
 		int positionOpening = findFirst(code, "/*");
 		int positionClosing = findFirst(code, "*/");
+		if(positionClosing == -1){
+			return returncode;
+		}
 		returncode += code[0..positionOpening];
 		code = code[positionClosing + 2 ..];
 	}

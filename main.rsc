@@ -1,7 +1,7 @@
 /* 	Jordy Bottelier 10747338
 	Dennis kruidenberg 10780998
 	
-	time it takes to run large project: 16:28
+	time it takes to run large project: 17:07
 	Important decisions:
 	
 	1. We only count lines of code that have more than 2 characters (excluding whitespaces), we did this because
@@ -27,8 +27,10 @@ import duplication;
 void main(loc a){
 	loc location = a;
 	int volume = walkFiles(location);
+	println("volume done");
 	int volumeScore = mapVolume(volume);
 	list[list[int]] tmp = calculateComplexityUnitSize(location);
+	println("complexity done");
 	list[int] comps = tmp[0];
 	list[int] locs = tmp[1];
 	int cScore = mapCyclom(comps, locs);
