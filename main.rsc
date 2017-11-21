@@ -7,6 +7,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import util::ValueUI;
 import List;
+import util::Math;
 
 void main(){
 	loc location = |project://smallsql0.21_src|;
@@ -17,12 +18,46 @@ void main(){
 	list[int] locs = tmp[1];
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
-	println(unitScore);
-	println(cScore);
-	println(volumeScore);
+	int dupScore = 1;
+	// int dupScore = functioe();
 }
 
+// Map the duplication scores
+int mapDuplication(int score){
+	if(score <= 3){ return 2; }
+	if(score <= 5){ return 1; }
+	if(score <= 10){ return 0; }
+	if(score <= 20) { return -1; }
+	else { return -2; }
+}
 
+// Map all of the score to the maintainability metrics
+void overallMap(int volumeScore, int cScore, int dupScore, int unitScore){
+	int anal = capValue(volumeScore + dupScore + unitScore);
+	int change = capValue(cScore + dupScore);
+	int testr = capValue(cScore + unitScore);
+	real tot = 3.0;
+	int maintain = round((anal + change + testr) / tot);
+	println("analyzability = <anal>");
+	println("changeability = <change>");
+	println("testability = <testr>");
+	println("Maintainability = <maintain>");
+}
+
+// Cap the values to -- and ++ (-2 or 2) in case these values are exceeded, since this is possible
+int capValue(int val){
+	if(val < -2){
+		return -2;
+	}
+	if(val > 2){
+		return 2;
+	}
+	else{
+		return val;
+	}
+}
+
+// Map the total volume of the program to the SIG model score
 int mapVolume(int volume){
 	if(volume <= 66000){ return 2; }
 	if(volume <= 246000){ return 1; }
@@ -31,6 +66,7 @@ int mapVolume(int volume){
 	else { return -2; }
 }
 
+// Map the unit sizes to their score within the SIG model
 int mapUnitSize(list[int] sizes){
 	real mod_size = 0.0;
 	real high_size = 0.0;
@@ -58,6 +94,7 @@ int mapUnitSize(list[int] sizes){
 	return mapUnitSizeHelper(mod_size, high_size, insane_size);
 }
 
+// map the unit size value to its score defined in the sig model:
 //tresholds from http://www.cs.uu.nl/docs/vakken/apa/20140617-measuringsoftwareproductquality.pdf
 int mapUnitSizeHelper(real modr, real high, real insane){
 	if(modr <= 19.5 && high <= 10.9 && insane <= 3.9){
@@ -74,6 +111,7 @@ int mapUnitSizeHelper(real modr, real high, real insane){
 	}
 }
 
+// compute the cyclomatic complexity score and return its mapped values
 int mapCyclom(list[int] comps, list[int] locs){
 	real mod_risk = 0.0;
 	real high_risk = 0.0;
@@ -105,6 +143,8 @@ int mapCyclom(list[int] comps, list[int] locs){
 	return mapComplexityValues(mod_risk, high_risk, insane_risk);
 }
 
+// Map the values for the cyclomatic complexity to their respective scores
+// as defined in the paper http://www4.di.uminho.pt/~joost/publications/HeitlagerKuipersVisser-Quatic2007.pdf
 int mapComplexityValues(real modr, real high, real insane){
 	if(modr <= 25 && high == 0 && insane == 0){
 		return 2;
@@ -121,7 +161,6 @@ int mapComplexityValues(real modr, real high, real insane){
 	else{
 		return -2;
 	}
-
 }
 
 
