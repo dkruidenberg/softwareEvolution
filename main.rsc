@@ -1,3 +1,14 @@
+/* 	Jordy Bottelier 10747338
+	Dennis kruidenberg 10780998
+	
+	Important decisions:
+	
+	1. We only count lines of code that have more than 2 characters (excluding whitespaces), we did this because
+	we believe trailing accolades or brackets }/) do not impact the maintainability of a piece of code.
+	
+	
+*/
+
 module main
 import IO;
 import unitComplexity;
@@ -10,8 +21,8 @@ import List;
 import util::Math;
 import duplication;
 
-void main(){
-	loc location = |project://smallsql0.21_src|;
+void main(loc a){
+	loc location = a;
 	int volume = walkFiles(location);
 	int volumeScore = mapVolume(volume);
 	list[list[int]] tmp = calculateComplexityUnitSize(location);
@@ -19,9 +30,12 @@ void main(){
 	list[int] locs = tmp[1];
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
-	int dupScore = mapDuplication(toReal(countDuplication(location)) / sum(locs) * 100);
-	println(toReal(countDuplication(location)) / sum(locs) * 100);
-	println(dupScore);
+	int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / sum(locs) * 100)));
+	println("Duplcations: <dupScore>");
+	println("Complexity: <cScore>");
+	println("unit size Score: <unitScore>");
+	println("volume size score: <volumeScore>");
+	println("-------------------------------\n");
 	overallMap(volumeScore, cScore, dupScore, unitScore);
 }
 
@@ -44,6 +58,7 @@ void overallMap(int volumeScore, int cScore, int dupScore, int unitScore){
 	println("analyzability = <anal>");
 	println("changeability = <change>");
 	println("testability = <testr>");
+	println("-------------------------------\n");
 	println("Maintainability = <maintain>");
 }
 

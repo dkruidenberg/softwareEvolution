@@ -1,5 +1,5 @@
 module unitComplexity
-
+import count_loc;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
@@ -8,7 +8,7 @@ import IO;
 import Set;
 import Type;
 import lang::java::\syntax::Java15;
-import count_loc;
+
 
 list[list[int]] calculateComplexityUnitSize(loc location){
 	ast = createAstsFromEclipseProject(location,true);
