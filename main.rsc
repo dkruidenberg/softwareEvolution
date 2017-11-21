@@ -1,11 +1,14 @@
 /* 	Jordy Bottelier 10747338
 	Dennis kruidenberg 10780998
 	
+	time it takes to run large project: 16:28
 	Important decisions:
 	
 	1. We only count lines of code that have more than 2 characters (excluding whitespaces), we did this because
 	we believe trailing accolades or brackets }/) do not impact the maintainability of a piece of code.
 	
+	2. We did not include constructors in the counting of the unit complexity since we believe constructors should not be used to
+	make long methods (even though it is possible).
 	
 */
 
@@ -31,7 +34,7 @@ void main(loc a){
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
 	int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / sum(locs) * 100)));
-	println("Duplcations: <dupScore>");
+	println("Duplications: <dupScore>");
 	println("Complexity: <cScore>");
 	println("unit size Score: <unitScore>");
 	println("volume size score: <volumeScore>");
