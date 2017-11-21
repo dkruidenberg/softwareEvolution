@@ -6,6 +6,13 @@
 	1. We only count lines of code that have more than 2 characters (excluding whitespaces), we did this because
 	we believe trailing accolades or brackets }/) do not impact the maintainability of a piece of code.
 	
+	3. optimalizations for the duplication: 
+			- Only look at methods with # of lines > 6
+			- Don't look at the last 5 lines for the beginning of a duplication
+			- In the second loop (where we compare the lines with lines of other methods)
+			  we only loop at lines that have not been analysed yet. So that the method with index 10 
+			  does not get checked against number 8. This because 10 was already checked when we looked at 8. 
+	
 	
 */
 
