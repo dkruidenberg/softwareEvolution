@@ -37,18 +37,23 @@ void countDuplication(){
 					int targetSize = size(targetMethod);
 					if(targetSize >= 6){
 						int sourceLineCounter = 0;
+						
 						for(line <- sourceMethod){
 							int index = indexOf(targetMethod, line);
+							
 							if((index) != -1 && (targetSize - index >= 6)){
-								indexSource = sourceLineCounter;
+								int indexSource = sourceLineCounter;
 								int counter = 0;
+								int tmpBegin = sourceLineCounter;
+								int tmpBegin2 = index;
 								while(sourceMethod[indexSource] == targetMethod[index]){
 									counter += 1;
 									indexSource += 1;
 									index +=1; 
 								}
 								if(counter >=6){
-									print("duplicate");
+									print(slice(sourceMethod, tmpBegin, indexSource));
+									print(slice(targetMethod, tmpBegin2, index));
 									num_duplicates += 1;
 								}
 							}
@@ -62,4 +67,9 @@ void countDuplication(){
 			}
 		}
 	}
+}
+
+
+void printSection(list[str] myList, int start, int end){
+	int a = 4;
 }
