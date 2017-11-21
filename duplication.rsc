@@ -35,9 +35,9 @@ void countDuplication(){
 					counter = 0;
 					//only check for methods with size > 6
 					if(size(targetMethod) > 6){
-						for(z <- sourceMethod){
-							if(z in targetMethod){
-								println(z);
+						for(line <- sourceMethod){
+							if(line in targetMethod){
+								println(line);
 							}
 						}
 					}
