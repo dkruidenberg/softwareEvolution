@@ -27,7 +27,7 @@ void countDuplication(){
 	second_halve = tmp[1];
 	int allMethSize = size(first_halve);
 	real progress = 0.0;
-	real step = 1.0 / allMethSize;
+	real step = 1.0 / allMethSize * 100;
 	
 	//walk through each method
 	for(x <- first_halve){
@@ -38,7 +38,7 @@ void countDuplication(){
 		int sourceSize = size(sourceMethod);
 		//only check for methods with size > 6
 		if(sourceSize >= 6){
-			for(y <- second_halve){
+			for(y <- meth){
 				//get source of target method
 				source2 = readFile(y);
 				if(source1 != source2){
