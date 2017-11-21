@@ -15,58 +15,63 @@ import Type;
 import Set;
 
 
-void countDuplication(){
+void countDuplication(loc location){
 	//Get all the methods of the project
-	loc project = |project://smallsql0.21_src|;
-	model = createM3FromEclipseProject(project);
+	model = createM3FromEclipseProject(location);
 	meth = toList(methods(model));
+	//keep track of duplicates
 	int num_duplicates = 0;
 	int duplicate_lines = 0;
-	tmp = split(meth);
-	first_halve = tmp[0];
-	second_halve = tmp[1];
-	int allMethSize = size(first_halve);
+	//used for indicating process
+	int allMethSize = size(meth);
 	real progress = 0.0;
 	real step = 1.0 / allMethSize;
+	
 	int counter_x = 0;
 	//walk through each method
 	for(x <- meth){
 		counter_x += 1;
+		//progress indicator
 		progress += step;
 		println(progress);
+		//read and clean method
 		source1 = readFile(x);
 		sourceMethod = split("\n",cleanCode(source1));
 		int sourceSize = size(sourceMethod);
 		//only check for methods with size > 6
 		if(sourceSize >= 6){
+			//check method with everu other method strating from the current method (counter_x)
 			for(y <- drop(counter_x,meth)){
 				//get source of target method
 				source2 = readFile(y);
 				if(source1 != source2){
-					//split the methods and trim 
+					//get the method and trim
 					targetMethod = split("\n",cleanCode(source2));
-					//only check for methods with size > 6
 					int targetSize = size(targetMethod);
+					//only check for methods with size > 6
 					if(targetSize >= 6){
 						int sourceLineCounter = 0;
 						int skipLines = 0;
+						//walk through every line of the source method
 						for(line <- sourceMethod){
-							
+							//if statement is used to prevent that a block of 7 duplicate lines is counted as 2
 							if(skipLines == 0){
+								//get index of the first line of the duplication
 								int index = indexOf(targetMethod, line);
 								if((index) != -1 && (targetSize - index >= 6)){
 									int indexSource = sourceLineCounter;
 									int counter = 0;
-									int tmpBegin = sourceLineCounter;
-									int tmpBegin2 = index;
+									//walk through line until they don't match anymore
 									while(sourceMethod[indexSource] == targetMethod[index]){
 										counter += 1;
 										indexSource += 1;
 										index +=1;
+										//edge case
 										if(indexSource >= sourceSize || index >= targetSize){
 											break;
 										}
 									}
+									//if the duplicate is more then 6 lines
 									if(counter >=6){
 										skipLines = counter;
 										num_duplicates += 1;
@@ -78,6 +83,7 @@ void countDuplication(){
 								skipLines -= 1;
 							}
 							sourceLineCounter += 1;
+							//don't count the 5 remaining lines
 							if(sourceSize - sourceLineCounter < 6){
 								break;
 							}
