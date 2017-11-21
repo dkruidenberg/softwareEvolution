@@ -23,19 +23,20 @@ void countDuplication(){
 	//walk through each method
 	for(x <- meth){
 		source1 = readFile(x);
-		splitted1 = split("\n",cleanCode(source1));
-		if(size(splitted1)>6){
+		sourceMethod = split("\n",cleanCode(source1));
+		//only check for methods with size > 6
+		if(size(sourceMethod)>6){
 			for(y <- meth){
-				//get source of methods
+				//get source of target method
 				source2 = readFile(y);
 				if(source1 != source2){
 					//split the methods and trim 
-					splitted2 = split("\n",cleanCode(source2));
+					targetMethod = split("\n",cleanCode(source2));
 					counter = 0;
 					//only check for methods with size > 6
-					if(size(splitted2) > 6){
-						for(z <- splitted1){
-							if(z in splitted2){
+					if(size(targetMethod) > 6){
+						for(z <- sourceMethod){
+							if(z in targetMethod){
 								println(z);
 							}
 						}
