@@ -20,18 +20,25 @@ int countDuplication(loc location){
 	str all_code = accumulateFiles(location);
 	list[str] code_list = split("\n", all_code);
 	list[list[str]] blocks = createBlocks(code_list);
-	map[list[str], set[int]] mapping = countDuplicates(blocks);
+	map[list[str], set[int]] mapping = toMap(zip(blocks, index(blocks)));;
 	set[int] result = {*n |n<-range(mapping), size(n)>1};
+	list[int] tmplist = sort(result);
+	return accumulateSet(tmplist);
 	
-	int num_duplicates = 0;
+}
+
+public int accumulateSet(list[int] myList){
+	num_duplicates = 0;
 	int elemIndex = 0;
 	list[int] visited = [];
-	for(elem <- result){
+	iprint(myList);
+	for(elem <- myList){
 		if(!(elem in visited)){
 			num_duplicates += 6;
 			visited += elem;
 			int tmpElem = elem + 1;
-			while(tmpElem in result){
+			while(tmpElem in myList){
+				println(tmpElem);
 				visited += tmpElem;
 				num_duplicates += 1;
 				tmpElem += 1;
@@ -40,10 +47,7 @@ int countDuplication(loc location){
 		
 	}
 	return num_duplicates;
-}
 
-public map[list[str], set[int]] countDuplicates(list[list[str]] blocks){
-	return toMap(zip(blocks, index(blocks)));
 }
 
 public list[list[str]] createBlocks(list[str] code){
@@ -56,6 +60,11 @@ public list[list[str]] createBlocks(list[str] code){
 	return blocks;
 }
 
+public void printList(list[str] entry){
+	for(n <- entry){
+		println(n);
+	}
+}
 
 // Loop recursively through the files and add the lines of code within them to the result
 public str accumulateFiles(loc a){
@@ -71,11 +80,3 @@ public str accumulateFiles(loc a){
 	return returncode;
 }
 
-// Function for printing the duplicates to check if they were the same
-void printSection(list[str] myList, int startAt, int endAt){
-	printString = "";
-	for(n <- slice(myList, startAt, (endAt - startAt))){
-		printString += n + "\n";
-	}
-	println(printString);
-}
