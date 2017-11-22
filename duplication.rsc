@@ -33,13 +33,17 @@ public int countDuplicates(list[list[str]] blocks){
 		cur_block = blocks[index];
 		list[list[str]] tmp_blocks = drop(1, blocks);
 		int last_index = 0;
-		
+		list[int] temp_indexes = [];
 		while(indexOf(tmp_blocks, cur_block) != -1){
 			int duplicate_index = indexOf(tmp_blocks, cur_block);
 			tmp_blocks = drop(duplicate_index, tmp_blocks);
+			temp_indexes += (last_index+duplicate_index);
+			last_index = duplicate_index;
 		}
-	
+		println(temp_indexes);
+		overall_indexes += [temp_indexes];
 	}
+	
 
 }
 
