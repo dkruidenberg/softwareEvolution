@@ -15,7 +15,7 @@ void calculateSize(loc x){
 	
 	numberOfMethods = 0;
 	numberOfLines = 0;
-	for(c <- meth){
+	for(c <- meth){;
 		numberOfMethods += 1;
 		source = readFile(c);
 		result = countLOC(source);

@@ -10,6 +10,7 @@ import Set;
 import Type;
 import lang::java::\syntax::Java15;
 import Exception;
+import List;
 
 
 list[list[int]] calculateComplexityUnitSize(loc location){
@@ -34,7 +35,9 @@ list[list[int]] calculateComplexityUnitSize(loc location){
 			        case \for(list[Expression] initializers, list[Expression] updaters, Statement body) : complexity += 1;
 			        case \foreach(Declaration parameter, Expression collection, Statement body) : complexity += 1;
 			        case \catch(Declaration exception, Statement body): complexity += 1;
-			        case \switch(Expression expression, list[Statement] statements): complexity += 1;
+			        case \conditional(Expression expression, Expression thenBranch, Expression elseBranch): complexity += 1;
+			        case \infix(_,"&&",_): complexity += 1;
+			        case \infix(_,"||",_): complexity += 1;
 				};
 				complexities += complexity;
 			}
@@ -44,7 +47,9 @@ list[list[int]] calculateComplexityUnitSize(loc location){
 		}
 	}
 	println("Methods skipped <counter>");
-	return [complexities,lengths];
+	println(min(lengths));
+	println(max(lengths));
+	return 0;
 }
 
 
