@@ -55,7 +55,17 @@ list[list[int]] calculateComplexityUnitSize(loc location){
 		}
 		//construtor
 		case csr: \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
-			complexities += complexityMethod(csr);
+			loc n = csr.decl;
+			try{
+				//caluculate Unit Size
+				source = readFile(n);
+				lengths += countLOC(source);
+				//calculate complexity
+				complexities += complexityMethod(csr);
+			}
+			catch : {
+				failed += 1;
+			}
 		}
 	}
 	return [complexities,lengths];
