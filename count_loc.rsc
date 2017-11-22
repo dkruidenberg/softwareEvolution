@@ -23,6 +23,7 @@ public int walkFiles(loc a){
 public int countLOC(str code){
 	code = filterMultiline(code);
 	code = filterSingleline(code);
+	//code = removeNewLines(code);
 	return filterNewlines(code);
 }
 
@@ -30,13 +31,14 @@ public int countLOC(str code){
 // closing of the multilines from appending to the result. 
 public str filterMultiline(str code){
 	str returncode = "";
+	first = true;
 	
-	// TODO alles voor de eerste find first wel toevoegen
 	while(findFirst(code, "/*") != -1){
 		str tmpstr = "";
 		int positionOpening = findFirst(code, "/*");
 		int positionClosing = findFirst(code, "*/");
 		if(positionClosing == -1){
+			returncode += code[0..positionOpening];
 			return returncode;
 		}
 		returncode += code[0..positionOpening];
@@ -105,6 +107,10 @@ public str removeNewLines(str code){
 
 }
 
+public int countLinesFile(loc a){
+	str code = readFile(a);
+	return countLOC(code);
+}
 
 // debug funtion, count lines of code, and print them
 public void countLines(loc a){

@@ -47,26 +47,23 @@ import duplication;
 void main(loc a){
 	loc location = a;
 	int volume = walkFiles(location);
-	println(volume);
-	println("volume done");
+	println("Volume : <volume>");
 	int volumeScore = mapVolume(volume);
-	println(volumeScore);
 	list[list[int]] tmp = calculateComplexityUnitSize(location);
-	println("complexity done");
 	list[int] comps = tmp[0];
 	list[int] locs = tmp[1];
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
 	int tmp2 = countDuplication(location);
-	println(tmp2);
-	println(sum(locs));
-	//int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / sum(locs) * 100)));
-	//println("Duplications: <dupScore>");
-	//println("Complexity: <cScore>");
-	//println("unit size Score: <unitScore>");
-	//println("volume size score: <volumeScore>");
-	//println("-------------------------------\n");
-	//overallMap(volumeScore, cScore, dupScore, unitScore);
+	println("Number of duplications: <tmp2>");
+	println("Duplication percentage: <tmp2/toReal(sum(locs)) * 100>");
+	int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / volume * 100)));
+	println("Duplications: <dupScore>");
+	println("Complexity: <cScore>");
+	println("unit size Score: <unitScore>");
+	println("volume size score: <volumeScore>");
+	println("-------------------------------\n");
+	overallMap(volumeScore, cScore, dupScore, unitScore);
 }
 
 // Map the duplication scores
@@ -136,9 +133,12 @@ int mapUnitSize(list[int] sizes){
 	mod_size = mod_size / total_loc * 100;
 	high_size = high_size / total_loc * 100;
 	insane_size = insane_size / total_loc * 100;
-	println(mod_size);
-	println(high_size);
-	println(insane_size);
+	println("------------------------------------\n");
+	println("Medium unit size <mod_size>");
+	println("High unit size <high_size>");
+	println("Super High unit size <insane_size>");
+	println("Other: <100 - high_size - mod_size - insane_size>");
+	println("------------------------------------\n");
 	return mapUnitSizeHelper(mod_size, high_size, insane_size);
 }
 
