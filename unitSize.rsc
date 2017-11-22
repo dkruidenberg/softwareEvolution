@@ -21,7 +21,5 @@ void calculateSize(loc x){
 		result = countLOC(source);
 		numberOfLines += result;
 	}
-	println(numberOfMethods);
-	println(numberOfLines);
 	
 }

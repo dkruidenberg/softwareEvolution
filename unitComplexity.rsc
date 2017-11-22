@@ -47,8 +47,6 @@ list[list[int]] calculateComplexityUnitSize(loc location){
 		}
 	}
 	println("Methods skipped <counter>");
-	println(min(lengths));
-	println(max(lengths));
 	return [complexities,lengths];
 }
 
