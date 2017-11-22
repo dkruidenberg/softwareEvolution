@@ -74,7 +74,7 @@ public int filterNewlines(str code){
 	for(/<sentence: (.*)>[\r\n]/ := code){
 		if (/\S/ := sentence){
 			sentence = trim(sentence);
-			if(size(sentence) > 2){
+			if(size(sentence) > 0){
 				returncode += sentence + "\n";
 				num_lines += 1;
 			}
@@ -98,7 +98,7 @@ public str removeNewLines(str code){
 	for(/<sentence: (.*)>[\r\n]/ := code){
 		if (/\S/ := sentence){
 			sentence = trim(sentence);
-			if(size(sentence) > 2){
+			if(size(sentence) > 0){
 				returncode += sentence + "\n";
 			}
 		}

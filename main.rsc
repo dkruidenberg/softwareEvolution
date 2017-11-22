@@ -15,7 +15,20 @@
 			- Don't look at the last 5 lines for the beginning of a duplication
 			- In the second loop (where we compare the lines with lines of other methods)
 			  we only loop at lines that have not been analysed yet. So that the method with index 10 
-			  does not get checked against number 8. This because 10 was already checked when we looked at 8. 
+			  does not get checked against number 8. This because 10 was already checked when we looked at 8.
+			  
+Duplications: -1
+Complexity: -2
+unit size Score: -2
+volume size score: 1
+-------------------------------
+
+analyzability = -2
+changeability = -2
+testability = -2
+-------------------------------
+
+Maintainability = -2
 	
 */
 
@@ -34,21 +47,26 @@ import duplication;
 void main(loc a){
 	loc location = a;
 	int volume = walkFiles(location);
+	println(volume);
 	println("volume done");
 	int volumeScore = mapVolume(volume);
+	println(volumeScore);
 	list[list[int]] tmp = calculateComplexityUnitSize(location);
 	println("complexity done");
 	list[int] comps = tmp[0];
 	list[int] locs = tmp[1];
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
-	int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / sum(locs) * 100)));
-	println("Duplications: <dupScore>");
-	println("Complexity: <cScore>");
-	println("unit size Score: <unitScore>");
-	println("volume size score: <volumeScore>");
-	println("-------------------------------\n");
-	overallMap(volumeScore, cScore, dupScore, unitScore);
+	int tmp2 = countDuplication(location);
+	println(tmp2);
+	println(sum(locs));
+	//int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / sum(locs) * 100)));
+	//println("Duplications: <dupScore>");
+	//println("Complexity: <cScore>");
+	//println("unit size Score: <unitScore>");
+	//println("volume size score: <volumeScore>");
+	//println("-------------------------------\n");
+	//overallMap(volumeScore, cScore, dupScore, unitScore);
 }
 
 // Map the duplication scores
@@ -118,6 +136,9 @@ int mapUnitSize(list[int] sizes){
 	mod_size = mod_size / total_loc * 100;
 	high_size = high_size / total_loc * 100;
 	insane_size = insane_size / total_loc * 100;
+	println(mod_size);
+	println(high_size);
+	println(insane_size);
 	return mapUnitSizeHelper(mod_size, high_size, insane_size);
 }
 
