@@ -31,20 +31,17 @@ public int accumulateSet(list[int] myList){
 	num_duplicates = 0;
 	int elemIndex = 0;
 	list[int] visited = [];
-	iprint(myList);
 	for(elem <- myList){
 		if(!(elem in visited)){
 			num_duplicates += 6;
 			visited += elem;
 			int tmpElem = elem + 1;
 			while(tmpElem in myList){
-				println(tmpElem);
 				visited += tmpElem;
 				num_duplicates += 1;
 				tmpElem += 1;
 			}
 		}
-		
 	}
 	return num_duplicates;
 
@@ -60,6 +57,7 @@ public list[list[str]] createBlocks(list[str] code){
 	return blocks;
 }
 
+// debug function to print a block
 public void printList(list[str] entry){
 	for(n <- entry){
 		println(n);
