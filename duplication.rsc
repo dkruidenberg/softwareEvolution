@@ -13,38 +13,37 @@ import String;
 import List;
 import Type;
 import Set;
-
+import Map;
+import util::Benchmark;
 
 int countDuplication(loc location){
 	str all_code = accumulateFiles(location);
 	list[str] code_list = split("\n", all_code);
 	list[list[str]] blocks = createBlocks(code_list);
-	for(n <- blocks){
-		println(size(n));
-		println(n);
+	map[list[str], set[int]] mapping = countDuplicates(blocks);
+	set[int] result = {*n |n<-range(mapping), size(n)>1};
+	
+	int num_duplicates = 0;
+	int elemIndex = 0;
+	list[int] visited = [];
+	for(elem <- result){
+		if(!(elem in visited)){
+			num_duplicates += 6;
+			visited += elem;
+			int tmpElem = elem + 1;
+			while(tmpElem in result){
+				visited += tmpElem;
+				num_duplicates += 1;
+				tmpElem += 1;
+			}
+		}
+		
 	}
-
-	return 0;
+	return num_duplicates;
 }
 
-public int countDuplicates(list[list[str]] blocks){
-	list[list[int]] overall_indexes = [[]]; 
-	for(int index <- [0, size(blocks)]){
-		cur_block = blocks[index];
-		list[list[str]] tmp_blocks = drop(1, blocks);
-		int last_index = 0;
-		list[int] temp_indexes = [];
-		while(indexOf(tmp_blocks, cur_block) != -1){
-			int duplicate_index = indexOf(tmp_blocks, cur_block);
-			tmp_blocks = drop(duplicate_index, tmp_blocks);
-			temp_indexes += (last_index+duplicate_index);
-			last_index = duplicate_index;
-		}
-		println(temp_indexes);
-		overall_indexes += [temp_indexes];
-	}
-	
-
+public map[list[str], set[int]] countDuplicates(list[list[str]] blocks){
+	return toMap(zip(blocks, index(blocks)));
 }
 
 public list[list[str]] createBlocks(list[str] code){
