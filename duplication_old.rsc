@@ -1,4 +1,4 @@
-module duplication
+module duplication_old
 
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
@@ -14,15 +14,13 @@ import List;
 import Type;
 import Set;
 
-
 int countDuplication(loc location){
-	str all_code = accumulateFiles(location);
-	
-	return 0;
+	//Get all the methods of the project
+	model = createM3FromEclipseProject(location);
+	meth = toList(methods(model));
 	//keep track of duplicates
 	int num_duplicates = 0;
 	int duplicate_lines = 0;
-	
 	//used for indicating process
 	int allMethSize = size(meth);
 	real progress = 0.0;
@@ -95,20 +93,6 @@ int countDuplication(loc location){
 	//println(num_duplicates);
 	//println(duplicate_lines);
 	return duplicate_lines;
-}
-
-// Loop recursively through the files and add the lines of code within them to the result
-public str accumulateFiles(loc a){
-	returncode = "";
-	for (entry <- listEntries(a)){
-		if (/\.java/ := entry){
-			str code = readFile(a+entry);
-			returncode += cleanCode(code);
-		}
-		elseif (isDirectory(a+entry))
-			returncode += accumulateFiles(a+entry);
-	}
-	return returncode;
 }
 
 // Function for printing the duplicates to check if they were the same
