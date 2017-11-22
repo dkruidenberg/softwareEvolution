@@ -30,6 +30,8 @@ public int countLOC(str code){
 // closing of the multilines from appending to the result. 
 public str filterMultiline(str code){
 	str returncode = "";
+	
+	// TODO alles voor de eerste find first wel toevoegen
 	while(findFirst(code, "/*") != -1){
 		str tmpstr = "";
 		int positionOpening = findFirst(code, "/*");
