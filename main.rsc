@@ -42,20 +42,29 @@ import util::ValueUI;
 import List;
 import util::Math;
 import duplication;
-import count_loc;	
+import count_loc;
+import util::Benchmark;
+import Type;
 
 
-void main(loc a){
-	loc location = a;
+void main(loc location){
+	int startVolume = realTime();
 	int volume = walkFiles(location);
 	println("Volume : <volume>");
 	int volumeScore = mapVolume(volume);
+	int volumetime = realTime() - startVolume;
+
+	int startComp = realTime();
 	list[list[int]] tmp = calculateComplexityUnitSize(location);
 	list[int] comps = tmp[0];
 	list[int] locs = tmp[1];
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
+	int compTime = realTime() - startComp;
+
+	int startDup = realTime();
 	int tmp2 = countDuplication(location);
+	int dupTime = realTime() - startDup;
 	println("Number of duplications: <tmp2>");
 	println("Duplication percentage: <tmp2/toReal(sum(locs)) * 100>");
 	int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / volume * 100)));
@@ -64,8 +73,16 @@ void main(loc a){
 	println("unit size Score: <unitScore>");
 	println("volume size score: <volumeScore>");
 	println("-------------------------------\n");
+	println("Time per function (seconds):");
+	println("Volume time: <volumetime/1000.0>");
+	println("Cyclomatic complexity + unit size: <compTime/1000.0>");
+	println("Duplication time: <dupTime/1000.0>");
+	
+	println("-------------------------------\n");
+	
 	overallMap(volumeScore, cScore, dupScore, unitScore);
 }
+
 
 // Map the duplication scores
 int mapDuplication(int score){
