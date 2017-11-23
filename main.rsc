@@ -133,12 +133,12 @@ int mapUnitSize(list[int] sizes){
 	mod_size = mod_size / total_loc * 100;
 	high_size = high_size / total_loc * 100;
 	insane_size = insane_size / total_loc * 100;
-	println("------------------------------------\n");
-	println("Medium unit size <mod_size>");
-	println("High unit size <high_size>");
-	println("Super High unit size <insane_size>");
-	println("Other: <100 - high_size - mod_size - insane_size>");
-	println("------------------------------------\n");
+	println("\n------------------------------------");
+	println("Medium unit size <mod_size>%");
+	println("High unit size <high_size>%");
+	println("Super High unit size <insane_size>%");
+	println("Other: <100 - high_size - mod_size - insane_size>%");
+	println("\n------------------------------------");
 	return mapUnitSizeHelper(mod_size, high_size, insane_size);
 }
 
