@@ -67,7 +67,7 @@ void main(loc location){
 	int dupTime = realTime() - startDup;
 	println("Number of duplications: <tmp2>");
 	println("Duplication percentage: <tmp2/toReal(sum(locs)) * 100>");
-	int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / volume * 100)));
+	int dupScore = mapDuplication(toInt(round(toReal(tmp2) / volume * 100)));
 	println("Duplications: <dupScore>");
 	println("Complexity: <cScore>");
 	println("unit size Score: <unitScore>");
