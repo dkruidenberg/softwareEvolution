@@ -1,11 +1,10 @@
 module unitComplexity
 
 import count_loc;
-
+import IO;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
-import IO;
 import lang::java::\syntax::Java15;
 import Exception;
 import List;
@@ -34,6 +33,7 @@ int complexityMethod(Declaration meth){
 list[list[int]] calculateComplexityUnitSize(loc location){
 	//create ast
 	ast = createAstsFromEclipseProject(location,true);
+ 	myModel = createM3FromEclipseProject(location);	
 	lengths = [];
 	complexities = [];
 	int failed = 0;

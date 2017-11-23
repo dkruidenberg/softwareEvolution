@@ -42,6 +42,8 @@ import util::ValueUI;
 import List;
 import util::Math;
 import duplication;
+import count_loc;	
+
 
 void main(loc a){
 	loc location = a;
