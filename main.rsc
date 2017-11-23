@@ -170,6 +170,9 @@ int mapUnitSizeHelper(real modr, real high, real insane){
 		return 1;
 	}
 	if(modr <= 34.1 && high <= 22.2 && insane <= 11.0){
+		return 0;
+	}
+	if(modr <= 45.9 && high <= 31.4 && insane <= 18.1){
 		return -1;
 	}
 	else{
