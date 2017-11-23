@@ -35,7 +35,6 @@ Maintainability = -2
 module main
 import IO;
 import unitComplexity;
-import unitSize;
 import count_loc;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
@@ -52,12 +51,14 @@ void main(loc a){
 	list[list[int]] tmp = calculateComplexityUnitSize(location);
 	list[int] comps = tmp[0];
 	list[int] locs = tmp[1];
+	print(comps);
 	int cScore = mapCyclom(comps, locs);
 	int unitScore =  mapUnitSize(locs);
 	int tmp2 = countDuplication(location);
 	println("Number of duplications: <tmp2>");
 	println("Duplication percentage: <tmp2/toReal(sum(locs)) * 100>");
 	int dupScore = mapDuplication(toInt(round(toReal(countDuplication(location)) / volume * 100)));
+	println(countDuplication(location));
 	println("Duplications: <dupScore>");
 	println("Complexity: <cScore>");
 	println("unit size Score: <unitScore>");

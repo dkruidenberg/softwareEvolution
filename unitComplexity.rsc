@@ -1,6 +1,5 @@
 module unitComplexity
 
-import unitSize;
 import count_loc;
 
 import lang::java::jdt::m3::Core;
@@ -42,16 +41,17 @@ list[list[int]] calculateComplexityUnitSize(loc location){
 		//method
 		case meth : \method(_, _, _, _, _) : {
 			loc n = meth.decl;
-			try{
-				//caluculate Unit Size
-				source = readFile(n);
-				lengths += countLOC(source);
-				//calculate complexity
-				complexities += complexityMethod(meth);
-			}
-			catch : {
-				failed += 1;
-			}
+			//try{
+			//caluculate Unit Size
+			print(n);
+			source = readFile(n);
+			lengths += countLOC(source);
+			//calculate complexity
+			complexities += complexityMethod(meth);
+			//}
+			//catch : {
+			//	failed += 1;
+			//}
 		}
 		//construtor
 		case csr: \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl):{
@@ -68,6 +68,7 @@ list[list[int]] calculateComplexityUnitSize(loc location){
 			}
 		}
 	}
+	println("failed: <failed>");
 	return [complexities,lengths];
 }
 

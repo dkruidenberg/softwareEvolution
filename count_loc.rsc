@@ -31,9 +31,9 @@ public int countLOC(str code){
 public str filterMultiline(str code){
 	str returncode = "";
 	
-	while(findFirst(code, "\n/*") != -1 || findFirst(code, "/*") != -1){
+	while(findFirst(code, "/*") != -1){
 		str tmpstr = "";
-		int positionOpening = findFirst(code, "\n/*") + 1;
+		int positionOpening = findFirst(code, "/*");
 		int positionClosing = findFirst(code, "*/");
 		if(positionClosing == -1){
 			returncode += code[0..positionOpening];
