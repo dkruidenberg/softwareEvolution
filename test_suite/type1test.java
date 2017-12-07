@@ -1,11 +1,26 @@
 package test_suite;
+import hallo;
 public class type1test {
-	public int main() {
-		int a = 1;
-		int b = 1;
-		b = 10;
-		b = 10;
+	public void main2() {
+		int a = 10;
+		if (a > 10) {
+			a = 11;
+		}
+		if (a > 10) {
+			a = 11;
+		}
 		
-		return a;
 	}
+	public void main3() {
+		int a = 10;
+		if (a > 10) {
+			a = 11;
+		}
+		if (a > 10) {
+			a = 11;
+		}
+		main2();
+		main2();
+	}
+
 }

@@ -33,6 +33,7 @@ void countDuplication(loc location){
 	//list[node] unset_list = node_list;
 	//println(unset_list); 
 	map[node, set[int]] mapping = toMap(zip(unset_list, index(unset_list)));
+	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	text(mapping);
 }
 
@@ -40,14 +41,21 @@ bool goodNode(node n){
 	if(Declaration d := n){
 		return true;
 	}
-	if(Expression e := n){
-		return true;
-	}
 	if(Statement s := n){
 		return true;
 	}
 	
 	return false;
+}
+
+int countDepth(node n){
+	int depth = 0;
+	visit(n){
+		case node d:{
+			depth += 1; 
+		}
+	}
+	return depth;
 }
 
 
