@@ -10,6 +10,7 @@ import Map;
 import IO;
 import Type;
 import Node;
+import util::ValueUI;
 
 
 void type_1_statistics(loc location){
@@ -29,10 +30,10 @@ void countDuplication(loc location){
 		}
 	}
 	list[node] unset_list = [unsetRec(n) | node n <- node_list];
+	//list[node] unset_list = node_list;
 	//println(unset_list); 
 	map[node, set[int]] mapping = toMap(zip(unset_list, index(unset_list)));
-	
-	iprint(mapping);
+	text(mapping);
 }
 
 bool goodNode(node n){
