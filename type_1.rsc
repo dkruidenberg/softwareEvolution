@@ -8,19 +8,30 @@ import List;
 import Set;
 import Map;
 import IO;
+import Type;
+import Node;
 
 
-// TODO return an array with clone line numbers with their files? 
 void type_1_statistics(loc location){
-	int x = countDuplication(location);
-	println(x);
+	countDuplication(location);
 }
 
 //main function
 void countDuplication(loc location){
 	ast = createAstFromFile(|project://SoftwareEvolution/src/test_suite/type1test.java|, true);
-	println(ast);
+	list[node] node_list = [];
+	int max_depth = 5;
+	visit(ast){
+		case node s:{
+			node_list += s;
+		}
+	}
+	list[node] unset_list = [unsetRec(n) | node n <- node_list];
+	//println(unset_list); 
+	map[node, set[int]] mapping = toMap(zip(unset_list, index(unset_list)));
+	iprint(mapping);
 }
+
 
 
 

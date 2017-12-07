@@ -17,7 +17,7 @@ int countDuplication(loc location){
 	//example: 10 lines get split into 1-6, 2-7, 3-8, 4-9, 5-10
 	list[list[str]] blocks = createBlocks(code_list);
 	//Get the occurrences (indexes) of every block
-	map[list[str], set[int]] mapping = toMap(zip(blocks, index(blocks)));;
+	map[list[str], set[int]] mapping = toMap(zip(blocks, index(blocks)));
 	//Filter out the lines that have only one index: themself
 	set[int] result = {*n |n<-range(mapping), size(n)>1};
 	//Sort the list

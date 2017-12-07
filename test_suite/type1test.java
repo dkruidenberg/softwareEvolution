@@ -1,12 +1,11 @@
 package test_suite;
 public class type1test {
-	int a;
-	int b;
-	int c;
-	int d;
-	int a;
-	int b;
-	int c;
-	int a;
-	int b;
+	public int main() {
+		int a = 1;
+		int b = 1;
+		b = 10;
+		b = 10;
+		
+		return a;
+	}
 }
