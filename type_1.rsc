@@ -10,6 +10,7 @@ import Map;
 import IO;
 import Type;
 import Node;
+import util::ValueUI;
 
 
 void type_1_statistics(loc location){
@@ -32,7 +33,7 @@ void countDuplication(loc location){
 	//println(unset_list); 
 	map[node, set[int]] mapping = toMap(zip(unset_list, index(unset_list)));
 	
-	iprint(mapping);
+	text(mapping);
 }
 
 bool goodNode(node n){
@@ -40,13 +41,23 @@ bool goodNode(node n){
 		return true;
 	}
 	if(Expression e := n){
-		return true;
+		return false;
 	}
 	if(Statement s := n){
 		return true;
 	}
 	
 	return false;
+}
+
+int countDepth(node n){
+	int depth = 0;
+	visit(n){
+		case node d:{
+			depth += 1; 
+		}
+	}
+	return depth;
 }
 
 
