@@ -32,9 +32,34 @@ void countDuplication(loc location){
 	list[node] unset_list = [unsetRec(n) | node n <- node_list];
 	//println(unset_list); 
 	map[node, set[int]] mapping = toMap(zip(unset_list, index(unset_list)));
-	
+	for(n <- node_list){
+		iprint(n);
+		locatie = n.src;
+		println(locatie);
+		println(readFile(locatie));
+	}
 	text(mapping);
 }
+public loc getLocationOfNode(node subTree) {
+	loc location = |project://pipo|;
+
+	if (Declaration d := subTree) {
+		if (d.src?) {
+			location = d.src;
+		}
+	} else if (Expression e := subTree) {
+		if (e.src?) {
+			location = e.src;
+		}
+	} else if (Statement s := subTree) {
+		if (s.src?) {
+			location = s.src;
+		}
+	}
+
+	return location;
+}
+
 
 bool goodNode(node n){
 	if(Declaration d := n){
