@@ -5,16 +5,16 @@ public class type1test {
 		int a = 0;
 		int b = 0;
 		int c = 0;
-		
-		int d = 0;
-		int a = 0; 
+		int x = 2;
+		int a = 0;
 		int b = 0;
 		int c = 0;
 		int a = 0;
-		int b = 0;
 	}
 
 }
+// [a, b, c] [a, b]
+
 //
 //package test_suite;
 //import hallo;
