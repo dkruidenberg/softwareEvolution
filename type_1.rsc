@@ -190,9 +190,11 @@ public void collect_clones(map[list[node], set[int]] mapping, list[list[node]] n
 // group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes
 public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping){
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
-	list[list[node]] clone_classes = group_clones(clone_list);
+	list[list[node]] clone_classes = []; //group_clones(clone_list);
+	//text(clone_classes);
 	clone_classes += subsumption(clone_list);
 	clone_classes = toList(toSet(clone_classes));
+	text(clone_classes);
 	return clone_classes;
 }
 
@@ -277,18 +279,18 @@ list[list[node]] group_clones(list[list[list[node]]] clone_list){
 	list[list[node]] result = [];
 	// for every clone, collect the nodes into buckets and add it to the result
 	for(clone_block <- clone_list){
-			list[node] cur_bucket = [];
-			if(size(clone_block) != 0){
-				for(int i <- [0 .. size(clone_block)]){
-					if(i == 0){
-						cur_bucket += clone_block[i];
-					}
-					else{
-						cur_bucket += clone_block[i][size(clone_block[i]) - 1];
-					}
+		list[node] cur_bucket = [];
+		for(int i <- [0 .. size(clone_block)]){
+			if(size(clone_block[i]) != 0){
+				if(i == 0){
+					cur_bucket += clone_block[i];
 				}
-				result += [cur_bucket];
+				else{
+					cur_bucket += clone_block[i][size(clone_block[i]) - 1];
+				}
 			}
+		}
+		result += [cur_bucket];
 	}
 	result = toList(toSet(result));
 	return result;	
