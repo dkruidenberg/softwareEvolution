@@ -85,8 +85,7 @@ void countDuplication(loc location){
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Done3");
-	json(mapping, nodeToLoc);
-	return;
+	//json(mapping, nodeToLoc);
 	collect_clones(mapping, node_blocks);
 }
 void json(map[list[node], set[int]] mapping, map[node, list[loc]] nodeToLoc){
@@ -208,8 +207,12 @@ public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[
 // Note that this method is insanely long and has a high cyclomatic complexity. We left it like this since there is a lot of
 // variable dependency in between the loops, and mostly because we were happy it worked. 
 list[list[node]] subsumption(list[list[list[node]]] clone_list){
+	num progress = 0;
+	num total_size = size(clone_list);
 	list[list[node]] result = [];
 	for(clone_block <- clone_list){
+		progress += 1;
+		println("Progress in subsumption (might take a while): <progress / total_size * 100>%");
 		// if there is only a single block it can never have a subclass
 		if(size(clone_block) != 1){
 			int max_size_block = size(clone_block) - 1;
@@ -267,23 +270,25 @@ list[list[node]] subsumption(list[list[list[node]]] clone_list){
 	return result;
 }
 
-
 // Takes a list of nodes like [[a, b, c], [b,c,d]] and makes it into 1 overall clone: [a, b, c, d]
 list[list[node]] group_clones(list[list[list[node]]] clone_list){
+	clone_list = [n |n<-clone_list,size(n)!=0];
+	text(clone_list);
 	list[list[node]] result = [];
 	// for every clone, collect the nodes into buckets and add it to the result
 	for(clone_block <- clone_list){
-		list[node] cur_bucket = [];
-		for(int i <- [0 .. size(clone_block)]){
-			
-			if(i == 0){
-				cur_bucket += clone_block[i];
+			list[node] cur_bucket = [];
+			if(size(clone_block) != 0){
+				for(int i <- [0 .. size(clone_block)]){
+					if(i == 0){
+						cur_bucket += clone_block[i];
+					}
+					else{
+						cur_bucket += clone_block[i][size(clone_block[i]) - 1];
+					}
+				}
+				result += [cur_bucket];
 			}
-			else{
-				cur_bucket += clone_block[i][size(clone_block[i]) - 1];
-			}
-		}
-		result += [cur_bucket];
 	}
 	result = toList(toSet(result));
 	return result;	
