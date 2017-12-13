@@ -14,6 +14,7 @@ Now we group consecutive values, so we can find a clone class
 get all subtrees, get mapping
 remove all single occuring maps
 
+clone classes definition -> http://maveric0.uwaterloo.ca/~migod/846/papers/roy-CloningSurveyTechReport.pdf
 clone classes -> set van subtrees van de clone class
 voor elke clone class check if subset of the subtrees of one other clone classes. 
 (mostly check if it is not a subset of all classes, if this is the case, it is a clone class).
@@ -52,91 +53,94 @@ void countDuplication(loc location){
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	collect_clones(mapping, node_blocks);
-	//printNodeClasses(node_classes, nodeToLoc, node_list);
-	//getCloneClass(mapping);
-	
 }
 
+// group all indices where clones occur to find clones larger than the specified size (we chose 6)
 public void collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
 	list[int] node_indices = sort([*n |n<-range(mapping), size(n)>1]);
 	list[list[int]] grouped_list = groupIndices(node_indices);
-	list[list[node]] node_groups = getNodeGroups(grouped_list, node_block, mapping);
-	//createSequences(node_groups);
-
+	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block, mapping);
 }
 
-// subsumption part
-public list[list[node]] getNodeGroups(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping){
-	list[list[node]] result = [];
+// group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes
+public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping){
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
-	list[list[node]] overall_clones = group_clones(clone_list);
-	list[list[node]] subclasses = [];
+	list[list[node]] clone_classes = group_clones(clone_list);
+	clone_classes += subsumption(clone_list);
+	clone_classes = toList(toSet(clone_classes));
+	return clone_classes;
+}
+
+// Find sub-clones that are part of 2 clones, but are not clones on their own. A.K.A: If A is a sub clone from B,
+// and A is a sub clone from C, where B != C, A is a subclone.
+//
+// This is done by manually iterating over all sub clones, and checking if they occur in other clones. If they do,
+// we also look for the largest sub-clone that can be found.
+// The test function for this method is stated in type_1_helper, that function takes lists of ints as input (which is a lot
+// easier to read). Test code will be created for that function
+//
+// Note that this method is insanely long and has a high cyclomatic complexity. We left it like this since there is a lot of
+// variable dependency in between the loops, and mostly because we were happy it worked. 
+list[list[node]] subsumption(list[list[list[node]]] clone_list){
+	list[list[node]] result = [];
 	for(clone_block <- clone_list){
-		list[node] cur_bucket = [];
-		for(int clone_index <- [0 .. size(clone_block)-1]){
-			list[node] clone = clone_block[clone_index];
-			subclasses = subsumption(clone_list, clone_block, clone_index, subclasses);
+		// if there is only a single block it can never have a subclass
+		if(size(clone_block) != 1){
+			int max_size_block = size(clone_block) - 1;
+			// check if part of this clone is in another clone
+			for(check_block <- (clone_list - [clone_block])){
+				// loop through the blocks of the overall clone
+				int skip = 0;
+				for(clone_index <- [0 .. size(clone_block)]){
+					x = true;
+					
+					// The skip parameter is needed in order to only find the largest sub-clone
+					// otherwise every sub-clone will be added too after the while loop
+					if(skip == 0){
+						// if there is only a single block it can never have a subclass
+						if(size(check_block) != 1){
+							// current clone 
+							clone = clone_block[clone_index];
+							list[node] cur_bucket = [];
+							int check_index = indexOf(check_block, clone);
+							// if a sub-clone occurs in another clone, search for the largest sub-clone and add this to the result
+							if(check_index != -1){
+								int max_size_check = size(check_block) - 1;
+								while(x){
+									skip += 1;
+									if(cur_bucket == []){
+										cur_bucket += clone_block[clone_index];
+									}
+									else{
+										cur_bucket += clone_block[clone_index][2];
+									}
+									if((clone_index + 1 <= max_size_block && check_index + 1 <= max_size_check)
+									&& (clone_block[clone_index + 1] == check_block[check_index + 1])){
+										clone_index += 1;
+										check_index += 1;
+									
+									
+									}
+									else{
+										x = false;
+									}
+								}
+								if((cur_bucket in result) == false){
+									result += [cur_bucket];
+								}
+							}
+						}
+					}
+					else{
+						skip -= 1;
+					}
+				}
+			}
 		}
 	}
-	text(subclasses);
 	return result;
 }
 
-
-// For a clone block (x lines), loop through the other blocks and see if it can find itself.
-// If it can find itself, it is a subclass since the clone list is actually a set of all the overall clone classes.
-// If it found itself, it will search for the largest clone-sub-class
-list[list[node]] subsumption(list[list[list[node]]] clone_list, list[list[node]] myBlock, int clone_index, list[list[node]] subclasses){
-	clone_class = true;
-	list[node] clone = myBlock[clone_index];
-	int max_size_block = size(myBlock) - 1;
-	for(check_block <- (clone_list - [myBlock])){
-		x = true;
-		list[node] cur_bucket = [];
-		int check_index = indexOf(check_block, clone);
-		if(check_index != -1){
-			println("-----------------------");
-			iprint(clone);
-			println("-----------------------");
-			int max_size_check = size(check_block) - 1;
-			while(x){
-				println(myBlock[clone_index]);
-				if(cur_bucket == []){
-					cur_bucket += myBlock[clone_index];
-				}
-				else{
-					cur_bucket += myBlock[clone_index][max_size_block];
-				}
-				if((clone_index + 1 <= max_size_block && check_index + 1 <= max_size_check)
-					&& (myBlock[clone_index + 1] == check_block[check_index + 1])){
-					clone_index += 1;
-					check_index += 1;
-					
-				}
-				else{
-					x = false;
-				}
-			}
-			subclasses = addToSubClasses(subclasses, cur_bucket);
-		}
-	}
-	subclasses = toList(toSet(subclasses));
-	return subclasses;
-}
-
-// if the subclass occurs in only 1 other subclass, and not on its own, do not add it
-list[list[node]] addToSubClasses(list[list[node]] subclasses, list[node] cur_bucket){
-	int i = 0;
-	for(n <- subclasses){
-		if(cur_bucket in subclasses){
-			i += 1;
-		}
-	}
-	if(i != 1){
-		subclasses += [cur_bucket];
-	}
-	return subclasses;
-}
 
 // Takes a list of nodes like [[a, b, c], [b,c,d]] and makes it into 1 overall clone: [a, b, c, d]
 list[list[node]] group_clones(list[list[list[node]]] clone_list){
@@ -144,7 +148,7 @@ list[list[node]] group_clones(list[list[list[node]]] clone_list){
 	// for every clone, collect the nodes into buckets and add it to the result
 	for(clone_block <- clone_list){
 		list[node] cur_bucket = [];
-		for(int i <- [0 .. size(clone_block)-1]){
+		for(int i <- [0 .. size(clone_block)]){
 			
 			if(i == 0){
 				cur_bucket += clone_block[i];
