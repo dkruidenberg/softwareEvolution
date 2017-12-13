@@ -19,6 +19,19 @@ clone classes -> set van subtrees van de clone class
 voor elke clone class check if subset of the subtrees of one other clone classes. 
 (mostly check if it is not a subset of all classes, if this is the case, it is a clone class).
 
+TODOS:
+- Write clone classes to file
+- Fix bug where the blocks are bad for some reason
+- Change json parser with filename
+- HTML bedazzle
+- Create test suite
+- Create Clone statistics
+- Create type 2 detector
+
+A report of cloning statistics showing at least the % of duplicated lines,
+number of clones, number of clone classes, biggest clone (in lines), biggest
+clone class, and example clones.
+
 */
 
 module type_1
@@ -194,7 +207,6 @@ public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[
 	//text(clone_classes);
 	clone_classes += subsumption(clone_list);
 	clone_classes = toList(toSet(clone_classes));
-	text(clone_classes);
 	return clone_classes;
 }
 
