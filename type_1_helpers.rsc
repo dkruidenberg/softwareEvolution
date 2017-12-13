@@ -13,33 +13,6 @@ import Node;
 import util::ValueUI;
 
 
-public void createSequences(list[list[node]] node_groups){
-	list[list[list[node]]] overall_result = [];
-	for(i <- [0..size(node_groups)]){
-		overall_result += [getSequences(node_groups[i])];
-	}
-	iprint(overall_result);
-}
-
-// loop through all sequences in decreasing order, and search for the largest sequence that is a clone (check vs the other sequences)
-public void matchSequences(list[list[list[node]]] all_sequences){
-	println("");
-}
-
-// for every item create a list of all subsequent items:
-// [a, b, c] -> [[a], [a, b], [a, b, c]]
-list[list[node]] getSequences(list[node] myList){
-	list[list[node]] result = [];
-	for(i <- [0 .. size(myList)]){
-		list[node] cur = [];
-		for(x <- [i .. size(myList)]){
-			cur += myList[x];
-		}
-		result += [cur];
-	}
-	return result;
-}
-
 loc changeLocZero(loc l){
 	l.begin.column = 0;
 	l.end.column = 0;
@@ -61,42 +34,6 @@ loc getNodeLoc(node n){
 	
 }
 
-bool goodNode(node n){
-	if(Declaration d := n){
-		return true;
-	}
-	if(Statement s := n){
-		return true;
-	}
-	
-	return false;
-}
-
-void checkSubtrees(list[node] node_list){
-	list[node] duplicate_trees = [];
-	for(a <- node_list){
-		for( b <- node_list){
-			if(a < b){
-				duplicate_trees += b;
-			}
-		}
-	}
-	text(duplicate_trees);
-
-}
-
-void printNodeClasses(list[list[int]] node_classes, map[node, loc] nodeToLoc, list[node] node_list){
-	for(clas <- node_classes){
-		for(n <- clas){
-			node cur = node_list[n];
-			loc l = nodeToLoc[cur];
-			println(readFile(l));
-		}
-		println("---------------------------");
-	}
-
-}
-
 set[node] getChildren(node parent){
 	set[node] result = {};
 	visit(parent){
@@ -110,11 +47,69 @@ set[node] getChildren(node parent){
 
 }
 
-void getCloneClass(map[node, set[int]] mapping){
-	text(mapping);
-	for(n <- mapping){
-		set[node] cur = getChildren(n);
-		iprint(cur);
-	}
 
+// test on a list of ints if our subsumption algorithm works
+// clone_list is a list with lists with lists of integers, the concatenation of the inner lists results in an entire clone.
+void subsumptionTest(list[list[list[int]]] clone_list){
+	list[list[int]] result = [];
+	for(clone_block <- clone_list){
+		// if there is only a single block it can never have a subclass
+		if(size(clone_block) != 1){
+			int max_size_block = size(clone_block) - 1;
+			// check if part of this clone is in another clone
+			for(check_block <- (clone_list - [clone_block])){
+				// loop through the blocks of the overall clone
+				int skip = 0;
+				for(clone_index <- [0 .. size(clone_block)]){
+					x = true;
+					if(skip == 0){
+						// if there is only a single block it can never have a subclass
+						if(size(check_block) != 1){
+							// current clone 
+							clone = clone_block[clone_index];
+							list[int] cur_bucket = [];
+							int check_index = indexOf(check_block, clone);
+							if(check_index != -1){
+								int max_size_check = size(check_block) - 1;
+								println("overall test clone: <clone_block>");
+								println("overall check clone: <check_block>");
+								println("Working with clone: <clone>");
+								while(x){
+									skip += 1;
+									if(cur_bucket == []){
+										cur_bucket += clone_block[clone_index];
+									}
+									else{
+										cur_bucket += clone_block[clone_index][2];
+									}
+									if((clone_index + 1 <= max_size_block && check_index + 1 <= max_size_check)
+									&& (clone_block[clone_index + 1] == check_block[check_index + 1])){
+										clone_index += 1;
+										check_index += 1;
+									
+									
+									}
+									else{
+										x = false;
+									}
+									println("bucket: <cur_bucket>");
+								}
+								if((cur_bucket in result) == false){
+									result += [cur_bucket];
+								}
+								println("skip is <skip>");
+							}
+							
+						}
+					}
+					else{
+						skip -= 1;
+					}
+				}
+			}
+		}
+	}
+	println(result);
 }
+// is actually: [[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4], [2, 3, 4, 5, 6]]
+//[[[1, 2, 3]], [[1, 2, 3], [2, 3, 4], [3, 4, 5]], [[1, 2, 3], [2, 3, 4]], [[2, 3, 4], [3, 4, 5], [4, 5, 6]]]

@@ -14,6 +14,7 @@ Now we group consecutive values, so we can find a clone class
 get all subtrees, get mapping
 remove all single occuring maps
 
+clone classes definition -> http://maveric0.uwaterloo.ca/~migod/846/papers/roy-CloningSurveyTechReport.pdf
 clone classes -> set van subtrees van de clone class
 voor elke clone class check if subset of the subtrees of one other clone classes. 
 (mostly check if it is not a subset of all classes, if this is the case, it is a clone class).
@@ -34,8 +35,6 @@ import IO;
 import Type;
 import Node;
 import util::ValueUI;
-import lang::json::IO;
-
 
 
 void type_1_statistics(loc location){
@@ -89,10 +88,6 @@ void countDuplication(loc location){
 	json(mapping, nodeToLoc);
 	return;
 	collect_clones(mapping, node_blocks);
-	//list[list[int]] node_classes = groupIndices(node_indices);
-	//printNodeClasses(node_classes, nodeToLoc, node_list);
-	//getCloneClass(mapping);
-	
 }
 void json(map[list[node], set[int]] mapping, map[node, list[loc]] nodeToLoc){
 	list[list[loc]] dupl = [];
@@ -186,31 +181,131 @@ map[loc,list[loc]] createMap(list[list[loc]] lst){
 	return result;
 }
 
-public void collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_list){
+// group all indices where clones occur to find clones larger than the specified size (we chose 6)
+public void collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
 	list[int] node_indices = sort([*n |n<-range(mapping), size(n)>1]);
 	list[list[int]] grouped_list = groupIndices(node_indices);
-	list[list[node]] node_groups = getNodeGroups(grouped_list, node_list);
-	createSequences(node_groups);
-
+	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block, mapping);
 }
 
+// group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes
+public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping){
+	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
+	list[list[node]] clone_classes = group_clones(clone_list);
+	clone_classes += subsumption(clone_list);
+	clone_classes = toList(toSet(clone_classes));
+	return clone_classes;
+}
 
-// group all lines that are found to be clones and are subsequent in the AST
-public list[list[node]] getNodeGroups(list[list[int]] grouped_list, list[list[node]] node_blocks){
+// Find sub-clones that are part of 2 clones, but are not clones on their own. A.K.A: If A is a sub clone from B,
+// and A is a sub clone from C, where B != C, A is a subclone.
+//
+// This is done by manually iterating over all sub clones, and checking if they occur in other clones. If they do,
+// we also look for the largest sub-clone that can be found.
+// The test function for this method is stated in type_1_helper, that function takes lists of ints as input (which is a lot
+// easier to read). Test code will be created for that function
+//
+// Note that this method is insanely long and has a high cyclomatic complexity. We left it like this since there is a lot of
+// variable dependency in between the loops, and mostly because we were happy it worked. 
+list[list[node]] subsumption(list[list[list[node]]] clone_list){
 	list[list[node]] result = [];
-	for(n <- grouped_list){
-		list[node] cur = [];
-		for(i <- n){
-			cur += (node_blocks[i] - cur);
+	for(clone_block <- clone_list){
+		// if there is only a single block it can never have a subclass
+		if(size(clone_block) != 1){
+			int max_size_block = size(clone_block) - 1;
+			// check if part of this clone is in another clone
+			for(check_block <- (clone_list - [clone_block])){
+				// loop through the blocks of the overall clone
+				int skip = 0;
+				for(clone_index <- [0 .. size(clone_block)]){
+					x = true;
+					
+					// The skip parameter is needed in order to only find the largest sub-clone
+					// otherwise every sub-clone will be added too after the while loop
+					if(skip == 0){
+						// if there is only a single block it can never have a subclass
+						if(size(check_block) != 1){
+							// current clone 
+							clone = clone_block[clone_index];
+							list[node] cur_bucket = [];
+							int check_index = indexOf(check_block, clone);
+							// if a sub-clone occurs in another clone, search for the largest sub-clone and add this to the result
+							if(check_index != -1){
+								int max_size_check = size(check_block) - 1;
+								while(x){
+									skip += 1;
+									if(cur_bucket == []){
+										cur_bucket += clone_block[clone_index];
+									}
+									else{
+										cur_bucket += clone_block[clone_index][2];
+									}
+									if((clone_index + 1 <= max_size_block && check_index + 1 <= max_size_check)
+									&& (clone_block[clone_index + 1] == check_block[check_index + 1])){
+										clone_index += 1;
+										check_index += 1;
+									
+									
+									}
+									else{
+										x = false;
+									}
+								}
+								if((cur_bucket in result) == false){
+									result += [cur_bucket];
+								}
+							}
+						}
+					}
+					else{
+						skip -= 1;
+					}
+				}
+			}
 		}
-		result += [cur];
 	}
 	return result;
 }
 
-public void removeSubsequences(list[list[node]] node_groups){
-	println("");
+
+// Takes a list of nodes like [[a, b, c], [b,c,d]] and makes it into 1 overall clone: [a, b, c, d]
+list[list[node]] group_clones(list[list[list[node]]] clone_list){
+	list[list[node]] result = [];
+	// for every clone, collect the nodes into buckets and add it to the result
+	for(clone_block <- clone_list){
+		list[node] cur_bucket = [];
+		for(int i <- [0 .. size(clone_block)]){
+			
+			if(i == 0){
+				cur_bucket += clone_block[i];
+			}
+			else{
+				cur_bucket += clone_block[i][size(clone_block[i]) - 1];
+			}
+		}
+		result += [cur_bucket];
+	}
+	result = toList(toSet(result));
+	return result;	
 }
+
+// Take a list of positions and put the clones in them
+list[list[list[node]]] group_listToCloneList(list[list[int]] grouped_list, list[list[node]] node_blocks){
+	list[list[list[node]]] result = [];
+	for(n <- grouped_list){
+		list[list[node]] cur_bucket = [];
+		for(i <- n){
+			cur_bucket += [node_blocks[i]];
+		}
+		if(!(cur_bucket in result)){
+			result += [cur_bucket];
+		}
+	}
+	return result;
+
+}
+
+
 
 //Create blocks of size x
 public list[list[node]] createBlocks(list[node] code, int x){
@@ -226,9 +321,9 @@ public list[list[node]] createBlocks(list[node] code, int x){
 	return blocks;
 }
 
+// group all lines that are found to be clones and are subsequent in the AST
 public list[list[int]] groupIndices(list[int] node_indices){
 	list[list[int]] clone_classes = [];
-	node_indices = sort(node_indices);
 	skip_counter = 0;
 	for(int n <- [0 .. size(node_indices)]){
 		int cur_index = node_indices[n];
@@ -292,6 +387,8 @@ bool goodNode(node n){
 	
 	return false;
 }
+
+
 
 
 
