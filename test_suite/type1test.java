@@ -5,11 +5,30 @@ public class type1test {
 		int a = 0;
 		int b = 0;
 		int c = 0;
-		int x = 2;
+		
+		int l = 3;
+		
 		int a = 0;
 		int b = 0;
 		int c = 0;
+		int d = 0;
+		int e = 0;
+		
+		int x = 2;
+		
 		int a = 0;
+		int b = 0;
+		int c = 0;
+		int d = 0;
+		int e = 0;
+		
+		int k = 0;
+		
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		int d = 0;
+		
 	}
 
 }
