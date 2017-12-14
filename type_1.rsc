@@ -21,7 +21,6 @@ voor elke clone class check if subset of the subtrees of one other clone classes
 
 TODOS:
 - Write clone classes to file
-- Fix bug where the blocks are bad for some reason
 - Change json parser with filename
 - HTML bedazzle
 - Create test suite
