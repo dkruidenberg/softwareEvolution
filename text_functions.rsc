@@ -75,6 +75,7 @@ void cloneClassesToFile(list[list[node]] clone_classes, map[node, list[loc]] nod
 		printstring += n + "\n-------- New Clone Class -------------\n";
 	}
 	writeFile(|project://SoftwareEvolution/src/clone_classes.text|,printstring);
+		println("\nExample Clone:\n <text_blocks[0]>");
 
 }
 

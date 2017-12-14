@@ -37,6 +37,7 @@ module type_1
 import type_1_helpers;
 import text_functions;
 import ast_functions;
+import clone_statistics;
 
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
@@ -51,23 +52,28 @@ import Node;
 import util::ValueUI;
 
 
-void type_1_statistics(loc location){
-	countDuplication(location);
+void type_1_statistics(loc location, int min_clone_size){
+	countDuplication(location, min_clone_size);
 }
 
 //main function
-void countDuplication(loc location){
-	tuple[list[list[node]],list[list[loc]]] result = getNodeBlocks(location);
+void countDuplication(loc location, int min_clone_size){
+	tuple[list[list[node]],list[list[loc]], int, map[node, list[loc]]] result = getNodeBlocks(location, min_clone_size);
 	list[list[node]] node_blocks = result[0];
+	map[node, list[loc]] nodeToLoc = result[3];
+	int total_size = result[2];
 	list[list[loc]] loc_blocks = result[1];
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Created Mapping");
 
 	tuple[list[list[node]],list[list[int]]] result_clones = collect_clones(mapping, node_blocks);
-	list[list[node]] clones_classes = result_clones[0];
+	list[list[node]] clone_classes = result_clones[0];
 	list[list[int]] grouped_list = result_clones[1];
-	json(grouped_list, loc_blocks);
+	percentageAstClones(grouped_list, total_size, min_clone_size);
+	cloneClassesToFile(clone_classes, nodeToLoc);
+	
+	//json(grouped_list, loc_blocks);
 }
 
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
@@ -83,9 +89,10 @@ public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
 	list[list[node]] clone_classes = group_clones(clone_list);
 	list[list[node]] sumb_classes = subsumption(clone_list);
+	createStatistics(sumb_classes, clone_classes);
 	clone_classes += sumb_classes;
+	
 	clone_classes = toList(toSet(clone_classes));
-	println(size(clone_classes));
 	return clone_classes;
 }
 
