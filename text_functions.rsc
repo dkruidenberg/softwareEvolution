@@ -14,37 +14,62 @@ import Type;
 import Node;
 import util::ValueUI;
 
-void json(list[list[int]] group_list, list[list[loc]] loc_blocks){
+tuple[int,int] getNumbers(list[loc] lst){
+	int begin = 100000000;
+	int end = 0;
+	for(location <- lst){
+		if(location.begin.line < begin){
+			begin = location.begin.line;
+		}
+		if(location.end.line > end){
+			end = location.end.line;
+		}
+	}
+	return <begin,end>;
+}
+
+
+void json(list[list[list[node]]] clone_list, list[list[list[loc]]] location_list){
 	str result = "[";
 	int counterOuter = 1;
-	int sizeOuter = size(group_list);
-	
-	for(g <- group_list){
-		int start_index = g[0];
-		int end_index = g[size(g)-1];
-		loc start_location = loc_blocks[start_index][0];
-		loc end_location = loc_blocks[end_index][size(loc_blocks[end_index])-1];
-		iprint(start_location);
-		iprint(end_location);
-		
-		result += "\n{\"name\":";
-		result += "\"" + start_location.path + "\", ";
-		
-		result += "\"imports\":[";
-		int counter = 1;
-		int limit = size(loc_blocks[g[0]]);
-		for(entry <- loc_blocks[g[0]]){
-			result += "\"" + entry.path + "\<" + "<entry.begin.line>" + "," + "<entry.end.line>" + "\>\"";
+	int index_counter = 0;
+	//first string needs to be added also
+	for(locations <- location_list){
+		if(size(locations)<2){
+			continue;
 		}
-		break;
+		tuple[int,int] first = getNumbers(locations[0]);
+		result += "\n{\"name\":";
+		result += "\"" + locations[0][0].path + "\", ";
+		result += "\"imports\":[";
+		
+		int counter = 1;
+		int limit = size(locations) ;
+		str sourceString = "\"source\": [";
+		for(location <- drop(0,locations)){
+			
+			tuple[int,int] endings = getNumbers(location);
+			result += "\"" + location[0].path + "\"";
+			sourceString += "\"" + location[0].path + "\<" + "<endings[0]>" + "," + "<endings[1]>" + "\>\"";
+			if(counter < limit){
+				result += ",";
+				sourceString += ",";
+			}
+			counter += 1;
+		}
+		result += "], ";
+		sourceString += "]";
+		result += sourceString;
+		result += "\"code\": [";
+		result += toString(getTextBlocks(clone_list[index_counter][0]));
+		result += "]},";
+		text(clone_list[index_counter][0]);
+		index_counter += 1;
+		
 		
 	}
-	iprint(result);
-	
-	
-	
-	
-
+	writeFile(|project://SoftwareEvolution/src/readme.json|,result);
+	return;
 	
 }
 
