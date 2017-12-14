@@ -61,35 +61,48 @@ void countDuplication(loc location){
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Done3");
-	//json(mapping, nodeToLoc);
-	collect_clones(mapping, node_blocks);
+
+	list[list[node]] clones_classes = collect_clones(mapping, node_blocks);
+	json(clones_classes, nodeToLoc);
 }
 
 
-void json(map[list[node], set[int]] mapping, map[node, list[loc]] nodeToLoc){
+void json(list[list[node]]  clones_classes, map[node, list[loc]] nodeToLoc){
 	list[list[loc]] dupl = [];
-	for(k<-mapping){
-		if(size(k) == 0){
+	for(clone<-clones_classes){
+		if(size(clone) == 0){
 			continue;
 		}
 		list[list[loc]] locations = [];
-		for(l <- k){
+		for(l <- clone){
 			locations += [nodeToLoc[l]];
 		}
 		dupl += [findfiles(locations)];
 		
 	}
 	map[loc,list[loc]] result = createMap(dupl);
-	writeJSON(result);
-	
+	writeJSON(result);	
 }
+str getText(list[node] block, map[node, list[loc]] nodeToLoc){
+	str result = "";
+	for(b<-block){
+		list[str] lines = readFileLines(nodeToLoc[b][0]);
+		for(line <- lines){
+			result += line + "\n";
+		}
+	}
+	return result;
+}
+
+
+
 void writeJSON(map[loc,list[loc]] input){
 	str result = "[";
 	int counterOuter = 1;
 	int sizeOuter = size(input);
 	for(l<-input){
-		list[int] lines = [];
-		lines += l.begin.line;
+		list[str] lines = [];
+		lines += l.path +":" + "<l.begin.line>";
 		
 		result += "\n{\"name\":";
 		result += "\"" + l.path + "\", ";
@@ -99,7 +112,7 @@ void writeJSON(map[loc,list[loc]] input){
 		limit = size(input[l]);
 		str tmpString = "";
 		for(matches <- input[l]){
-			lines += matches.begin.line;
+			lines += matches.path +":" + "<matches.begin.line>";
 			str tmpresult = "\"" + matches.path + "\"";
 			result += tmpresult;
 			if(counter < limit){
@@ -159,11 +172,12 @@ map[loc,list[loc]] createMap(list[list[loc]] lst){
 }
 
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
-public void collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
+public list[list[node]] collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
 	list[int] node_indices = sort([*n |n<-range(mapping), size(n)>1]);
 	println(size(node_indices));
 	list[list[int]] grouped_list = groupIndices(node_indices);
 	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block, mapping);
+	return clone_classes;
 }
 
 // group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes
@@ -192,7 +206,7 @@ list[list[node]] subsumption(list[list[list[node]]] clone_list){
 	list[list[node]] result = [];
 	for(clone_block <- clone_list){
 		progress += 1;
-		println("Progress in subsumption (might take a while): <progress / total_size * 100>%");
+		//println("Progress in subsumption (might take a while): <progress / total_size * 100>%");
 		// if there is only a single block it can never have a subclass
 		if(size(clone_block) != 1){
 			int max_size_block = size(clone_block) - 1;
