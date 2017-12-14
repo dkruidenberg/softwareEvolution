@@ -23,13 +23,6 @@ TODOS:
 - Change json parser with filename
 - HTML bedazzle
 - Create test suite
-- Create Clone statistics
-- Create type 2 detector
-
-A report of cloning statistics showing at least the % of duplicated lines,
-number of clones, number of clone classes, biggest clone (in lines), biggest
-clone class, and example clones.
-
 */
 
 module type_1
@@ -52,13 +45,19 @@ import Node;
 import util::ValueUI;
 
 
-void type_1_statistics(loc location, int min_clone_size){
-	countDuplication(location, min_clone_size);
+void type_1_statistics(loc location, int min_clone_size, bool type1){
+	if(type1){
+		println("Searching for type 1 clones...");
+	}
+	else{
+		println("Searching for type 2 clones...");
+	}
+	countDuplication(location, min_clone_size, type1);
 }
 
 //main function
-void countDuplication(loc location, int min_clone_size){
-	tuple[list[list[node]],list[list[loc]], int, map[node, list[loc]]] result = getNodeBlocks(location, min_clone_size);
+void countDuplication(loc location, int min_clone_size, bool type1){
+	tuple[list[list[node]],list[list[loc]], int, map[node, list[loc]]] result = getNodeBlocks(location, min_clone_size, type1);
 	list[list[node]] node_blocks = result[0];
 	map[node, list[loc]] nodeToLoc = result[3];
 	int total_size = result[2];
@@ -112,7 +111,7 @@ list[list[node]] subsumption(list[list[list[node]]] clone_list){
 	list[list[node]] result = [];
 	for(clone_block <- clone_list){
 		progress += 1;
-		//println("Progress in subsumption (might take a while): <progress / total_size * 100>%");
+		println("Progress in subsumption (might take a while): <progress / total_size * 100>%");
 		// if there is only a single block it can never have a subclass
 		if(size(clone_block) != 1){
 			int max_size_block = size(clone_block) - 1;
