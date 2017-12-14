@@ -29,12 +29,14 @@ tuple[int,int] getNumbers(list[loc] lst){
 }
 
 
-void json(list[list[list[node]]] clone_list, list[list[list[loc]]] location_list){
+void json(list[list[list[node]]] clone_list, list[list[list[loc]]] location_list, map[node, list[loc]] nodeToLoc){
 	str result = "[";
-	int counterOuter = 1;
+	int counterOuter = 0;
+	int limitOuter = size(location_list);
 	int index_counter = 0;
 	//first string needs to be added also
 	for(locations <- location_list){
+		counterOuter += 1;
 		if(size(locations)<2){
 			continue;
 		}
@@ -60,14 +62,19 @@ void json(list[list[list[node]]] clone_list, list[list[list[loc]]] location_list
 		result += "], ";
 		sourceString += "]";
 		result += sourceString;
-		result += "\"code\": [";
-		result += toString(getTextBlocks(clone_list[index_counter][0]));
-		result += "]},";
-		text(clone_list[index_counter][0]);
+		result += ", \"code\": [";
+		result += "\"" + getText(clone_list[index_counter][0], nodeToLoc) + "\"";
+		result += "]}";
+
 		index_counter += 1;
+		
+		if(counterOuter < limitOuter){
+			result += ",";
+		}
 		
 		
 	}
+	result += "]";
 	writeFile(|project://SoftwareEvolution/src/readme.json|,result);
 	return;
 	
@@ -87,7 +94,7 @@ str getText(list[node] block, map[node, list[loc]] nodeToLoc){
 	for(b<-block){
 		list[str] lines = readFileLines(nodeToLoc[b][0]);
 		for(line <- lines){
-			result += line + "\n";
+			result += escape(line, ("\"": "\\\"","\t":" "));
 		}
 	}
 	return result;
@@ -100,84 +107,8 @@ void cloneClassesToFile(list[list[node]] clone_classes, map[node, list[loc]] nod
 		printstring += n + "\n-------- New Clone Class -------------\n";
 	}
 	writeFile(|project://SoftwareEvolution/src/clone_classes.text|,printstring);
+		println("\nExample Clone:\n <text_blocks[0]>");
 
-}
-
-
-
-void writeJSON(map[loc,list[loc]] input){
-	str result = "[";
-	int counterOuter = 1;
-	int sizeOuter = size(input);
-	for(l<-input){
-		list[str] lines = [];
-		lines += l.path +":" + "<l.begin.line>";
-		
-		result += "\n{\"name\":";
-		result += "\"" + l.path + "\", ";
-
-		result += "\"imports\":[";
-		int counter = 1;
-		limit = size(input[l]);
-		str tmpString = "";
-		for(matches <- input[l]){
-			lines += matches.path +":" + "<matches.begin.line>";
-			str tmpresult = "\"" + matches.path + "\"";
-			result += tmpresult;
-			if(counter < limit){
-				result += ", ";
-			}
-			
-			tmpString += "\n{\"name\":" + tmpresult  + " , \"imports\":[], \"source\": []}";
-			if(counter < limit){
-				tmpString += ", ";
-			}
-			counter += 1;
-		}
-		
-
-		result += "],\"source\": " + toString(lines) +"},";
-		result += tmpString;
-		if(counterOuter<sizeOuter){
-			result += ",";
-		}
-		counterOuter += 1;
-	}
-	result += "\n]";	
-	writeFile(|project://SoftwareEvolution/src/readme.json|,result);
-}
-
-
-list[loc] findfiles(list[list[loc]] locations){
-	list[loc] result = [];
-	
-	for(l <- locations[0]){
-		bool tmp = true;
-		counter = 1;
-		for(x <- drop(1,locations)){
-			if(!any(loc n <- x, (l.begin.line + counter) == n.begin.line)){
-				tmp = false;
-			}
-			counter += 1;
-		}
-		if(tmp){
-			result += l;
-		}
-	}
-	return result;
-}
-
-map[loc,list[loc]] createMap(list[list[loc]] lst){
-	map[loc,list[loc]] result = ();
-	for(l <- lst){
-		if(size(l)>0){
-			loc key = l[0];
-			list[loc] rem = drop(1,l);
-	
-			result[key] = rem;
-		}
-	}
-	return result;
 }
 
 void printNodes(list[list[node]] node_blocks){

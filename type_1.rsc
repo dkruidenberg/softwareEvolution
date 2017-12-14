@@ -23,13 +23,6 @@ TODOS:
 - Change json parser with filename
 - HTML bedazzle
 - Create test suite
-- Create Clone statistics
-- Create type 2 detector
-
-A report of cloning statistics showing at least the % of duplicated lines,
-number of clones, number of clone classes, biggest clone (in lines), biggest
-clone class, and example clones.
-
 */
 
 module type_1
@@ -37,6 +30,7 @@ module type_1
 import type_1_helpers;
 import text_functions;
 import ast_functions;
+import clone_statistics;
 
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
@@ -51,26 +45,40 @@ import Node;
 import util::ValueUI;
 
 
-void type_1_statistics(loc location){
-	countDuplication(location);
+void type_1_statistics(loc location, int min_clone_size, bool type1){
+	if(type1){
+		println("Searching for type 1 clones...");
+	}
+	else{
+		println("Searching for type 2 clones...");
+	}
+	countDuplication(location, min_clone_size, type1);
 }
 
 //main function
-void countDuplication(loc location){
-	tuple[list[list[node]],list[list[loc]]] result = getNodeBlocks(location);
+void countDuplication(loc location, int min_clone_size, bool type1){
+	tuple[list[list[node]],list[list[loc]], int, map[node, list[loc]]] result = getNodeBlocks(location, min_clone_size, type1);
 	list[list[node]] node_blocks = result[0];
+	map[node, list[loc]] nodeToLoc = result[3];
+	int total_size = result[2];
 	list[list[loc]] loc_blocks = result[1];
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Created Mapping");
 
 	tuple[list[list[node]],list[list[int]]] result_clones = collect_clones(mapping, node_blocks);
-	list[list[node]] clones_classes = result_clones[0];
+	list[list[node]] clone_classes = result_clones[0];
 	list[list[int]] grouped_list = result_clones[1];
+
 	
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks); 
 	list[list[list[loc]]] location_list = getLocation(grouped_list, node_blocks,loc_blocks);
-	json(clone_list, location_list);
+	json(clone_list, location_list, nodeToLoc);
+
+	percentageAstClones(grouped_list, total_size, min_clone_size);
+	cloneClassesToFile(clone_classes, nodeToLoc);
+	
+
 }
 
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
@@ -86,9 +94,10 @@ public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
 	list[list[node]] clone_classes = group_clones(clone_list);
 	list[list[node]] sumb_classes = subsumption(clone_list);
+	createStatistics(sumb_classes, clone_classes);
 	clone_classes += sumb_classes;
+	
 	clone_classes = toList(toSet(clone_classes));
-	println(size(clone_classes));
 	return clone_classes;
 }
 
@@ -108,7 +117,7 @@ list[list[node]] subsumption(list[list[list[node]]] clone_list){
 	list[list[node]] result = [];
 	for(clone_block <- clone_list){
 		progress += 1;
-		//println("Progress in subsumption (might take a while): <progress / total_size * 100>%");
+		println("Progress in subsumption (might take a while): <progress / total_size * 100>%");
 		// if there is only a single block it can never have a subclass
 		if(size(clone_block) != 1){
 			int max_size_block = size(clone_block) - 1;
