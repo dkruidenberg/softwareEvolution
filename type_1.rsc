@@ -87,7 +87,7 @@ void json(list[list[node]]  clones_classes, map[node, list[loc]] nodeToLoc){
 str getText(list[node] block, map[node, list[loc]] nodeToLoc){
 	str result = "";
 	for(b<-block){
-		list[str] lines = readFileLines(b);
+		list[str] lines = readFileLines(nodeToLoc[b]);
 		for(line <- lines){
 			restult += line + "\n";
 		}
