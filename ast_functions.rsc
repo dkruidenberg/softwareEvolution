@@ -38,65 +38,60 @@ bool goodNode(node n){
 	return false;
 }
 
-tuple[list[list[node]], map[node, list[loc]]] getNodeBlocks(loc location){
+tuple[list[list[node]], list[list[loc]]] getNodeBlocks(loc location){
 	list[Declaration] ast = walkFilesAST(location);
-	println("Done1");
+	println("Created Asts");
 	list[list[node]] node_blocks = [];
-	map[node, list[loc]] nodeToLoc = ();
+	list[list[loc]] loc_blocks = [];
 	for(a <- ast){
-		tuple[list[node], map[node, list[loc]]] result = createCloneMappers(a);
+		tuple[list[node], list[loc]] result = createCloneMappers(a);
 		list[node] node_list = result[0];
-		for(res <- result[1]){
-			if(nodeToLoc[res]?){
-				nodeToLoc[res] += result[1][res];
-			}
-			else{
-				nodeToLoc[res] = result[1][res];
-			}
-		}
-		node_blocks += createBlocks(node_list, 6);
+		list[loc] loc_list = result[1];
+		
+		
+		tuple[list[list[node]],list[list[loc]]] blocks = createBlocks(node_list, 6, loc_list);
+		node_blocks += blocks[0];
+		loc_blocks += blocks[1];
 	}
 	println("Created Blocks");
-	return <node_blocks, nodeToLoc>;
+	return <node_blocks, loc_blocks>;
 }
 
 
 //Create blocks of size x
-public list[list[node]] createBlocks(list[node] code, int x){
-	list[list[node]] blocks = [[]];
+public tuple[list[list[node]],list[list[loc]]] createBlocks(list[node] code, int x, list[loc] loc_list){
+	list[list[node]] blocks = [];
+	list[list[loc]] loc_blocks = [];
 	int code_size = size(code);
 	//loop through every line and create a block of x starting from that index
 	if(code_size>=6){
 		for(int index <- [0 .. code_size - (x - 1)]){
 			list[node] new_block = slice(code, index, x);
 			blocks += [new_block];
+			list[loc] new_loc = slice(loc_list, index, x);
+			loc_blocks += [new_loc];
 		}
 	}
-	return blocks;
+	return <blocks,loc_blocks>;
 }
 
-tuple[list[node], map[node, list[loc]]] createCloneMappers(node ast){
+tuple[list[node],list[loc]] createCloneMappers(node ast){
 	list[node] node_list = [];
-	map[node, list[loc]] nodeToLoc = ();
+	list[loc] loc_list = [];
 	visit(ast){
 		case node n:{
 			if(goodNode(n)){
 				loc l = getNodeLoc(n);
 				n = unsetRec(n);
 				if(l != |unknown:///|){
-					if(nodeToLoc[n]?){
-						nodeToLoc[n] += l;
-					}
-					else{
-						nodeToLoc[n] = [l];
-					}
 					loc tmp = changeLocZero(l);
 	
 					node_list += n;
+					loc_list += l;
 				}
 			}
 		}
 	}
 	
-	return <node_list, nodeToLoc>;
+	return <node_list, loc_list>;
 }

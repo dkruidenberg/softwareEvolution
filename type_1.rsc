@@ -58,15 +58,15 @@ void type_1_statistics(loc location){
 
 //main function
 void countDuplication(loc location){
-	tuple[list[list[node]], map[node, list[loc]]] result = getNodeBlocks(location);
+	tuple[list[list[node]],list[list[loc]]] result = getNodeBlocks(location);
 	list[list[node]] node_blocks = result[0];
-	map[node, list[loc]] nodeToLoc = result[1];
+	list[list[loc]] loc_blocks = result[1];
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Done3");
 
-	list[list[node]] clones_classes = collect_clones(mapping, node_blocks, nodeToLoc);
-	json(clones_classes, nodeToLoc);
+	list[list[node]] clones_classes = collect_clones(mapping, node_blocks, loc_blocks);
+	//json(clones_classes, nodeToLoc);
 }
 
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
