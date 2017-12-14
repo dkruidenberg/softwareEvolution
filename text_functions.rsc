@@ -51,6 +51,16 @@ str getText(list[node] block, map[node, list[loc]] nodeToLoc){
 	return result;
 }
 
+void cloneClassesToFile(list[list[node]] clone_classes, map[node, list[loc]] nodeToLoc){
+	list[str] text_blocks = getTextBlocks(clone_classes, nodeToLoc);
+	str printstring = "";
+	for(n <- text_blocks){
+		printstring += n + "\n-------- New Clone Class -------------\n";
+	}
+	writeFile(|project://SoftwareEvolution/src/clone_classes.text|,printstring);
+
+}
+
 
 
 void writeJSON(map[loc,list[loc]] input){
@@ -117,9 +127,7 @@ list[loc] findfiles(list[list[loc]] locations){
 
 map[loc,list[loc]] createMap(list[list[loc]] lst){
 	map[loc,list[loc]] result = ();
-	iprint(lst);
 	for(l <- lst){
-		println(l);
 		if(size(l)>0){
 			loc key = l[0];
 			list[loc] rem = drop(1,l);

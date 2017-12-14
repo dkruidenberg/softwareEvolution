@@ -20,7 +20,6 @@ voor elke clone class check if subset of the subtrees of one other clone classes
 (mostly check if it is not a subset of all classes, if this is the case, it is a clone class).
 
 TODOS:
-- Write clone classes to file
 - Change json parser with filename
 - HTML bedazzle
 - Create test suite
@@ -63,35 +62,28 @@ void countDuplication(loc location){
 	list[list[loc]] loc_blocks = result[1];
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
-	println("Done3");
+	println("Created Mapping");
 
 	list[list[node]] clones_classes = collect_clones(mapping, node_blocks, loc_blocks);
 	//json(clones_classes, nodeToLoc);
 }
 
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
-public list[list[node]] collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block,  map[node, list[loc]] nodeToLoc){
+public list[list[node]] collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
 	list[int] node_indices = sort([*n |n<-range(mapping), size(n)>1]);
-	println(size(node_indices));
 	list[list[int]] grouped_list = groupIndices(node_indices);
-	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block, mapping, nodeToLoc);
+	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block);
 	return clone_classes;
 }
 
 // group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes
-public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping,  map[node, list[loc]] nodeToLoc){
+public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks){
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
 	list[list[node]] clone_classes = group_clones(clone_list);
 	list[list[node]] sumb_classes = subsumption(clone_list);
-	list[str] subtext = getTextBlocks(sumb_classes, nodeToLoc);
-	for(n <- subtext){
-		iprint(subtext);
-	}
-	//clone_classes += sumb_classes;
-	
+	clone_classes += sumb_classes;
 	clone_classes = toList(toSet(clone_classes));
-	list[str] subtext2 = getTextBlocks(clone_classes, nodeToLoc);
-	text(subtext2);
+	println(size(clone_classes));
 	return clone_classes;
 }
 

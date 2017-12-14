@@ -1,0 +1,2613 @@
+return false;
+{return false;}
+final boolean rowInserted(){
+		return false;
+	}
+return false;
+{return false;}
+final boolean rowDeleted(){
+		return false;
+	}
+throw new Error();
+{
+		throw new Error();
+	}
+void nullRow(){
+		throw new Error();
+	}
+
+-------- New Clone Class -------------
+case SQLTokenizer.TIMESTAMP:
+case SQLTokenizer.TIME:
+case SQLTokenizer.DATE:
+case SQLTokenizer.SMALLDATETIME:
+return ((DateTime)obj).getTimeMillis();
+default:
+
+-------- New Clone Class -------------
+return value;
+{
+		return value;
+	}
+@Override
+    public long longValue() {
+		return value;
+	}
+return String.valueOf(value);
+{
+	    return String.valueOf(value);
+	}
+@Override
+    public String toString(){
+	    return String.valueOf(value);
+	}
+
+-------- New Clone Class -------------
+level++;
+nodeStack.push(
+								new IndexNodeScrollStatus( 	(IndexNode)status.nodeValue, 
+														(expressions.get(level).getAlias() != SQLTokenizer.DESC_STR), 
+														scroll, level));
+continue;
+{
+							level++;
+							nodeStack.push(
+								new IndexNodeScrollStatus( 	(IndexNode)status.nodeValue, 
+														(expressions.get(level).getAlias() != SQLTokenizer.DESC_STR), 
+														scroll, level));
+							continue;
+						}
+return getReturnValue(status.nodeValue);
+if(status.nodeValue instanceof IndexNode){
+							level++;
+							nodeStack.push(
+								new IndexNodeScrollStatus( 	(IndexNode)status.nodeValue, 
+														(expressions.get(level).getAlias() != SQLTokenizer.DESC_STR), 
+														scroll, level));
+							continue;
+						}else
+							return getReturnValue(status.nodeValue);
+{
+						if(status.nodeValue instanceof IndexNode){
+							level++;
+							nodeStack.push(
+								new IndexNodeScrollStatus( 	(IndexNode)status.nodeValue, 
+														(expressions.get(level).getAlias() != SQLTokenizer.DESC_STR), 
+														scroll, level));
+							continue;
+						}else
+							return getReturnValue(status.nodeValue);
+					}
+if(status.nodeValue != null){
+						if(status.nodeValue instanceof IndexNode){
+							level++;
+							nodeStack.push(
+								new IndexNodeScrollStatus( 	(IndexNode)status.nodeValue, 
+														(expressions.get(level).getAlias() != SQLTokenizer.DESC_STR), 
+														scroll, level));
+							continue;
+						}else
+							return getReturnValue(status.nodeValue);
+					}
+
+-------- New Clone Class -------------
+return rowSource.getRowPosition();
+{
+		return rowSource.getRowPosition();
+	}
+final long getRowPosition() {
+		return rowSource.getRowPosition();
+	}
+long rowPosition
+rowSource.setRowPosition(rowPosition);
+{
+		rowSource.setRowPosition(rowPosition);
+	}
+final void setRowPosition(long rowPosition) throws Exception {
+		rowSource.setRowPosition(rowPosition);
+	}
+rowSource.nullRow();
+row = 0;
+{
+		rowSource.nullRow();
+		row = 0;
+	}
+final void nullRow() {
+		rowSource.nullRow();
+		row = 0;
+	}
+rowSource.noRow();
+row = 0;
+{
+		rowSource.noRow();
+		row = 0;
+	}
+final void noRow() {
+		rowSource.noRow();
+		row = 0;
+	}
+return rowSource.rowInserted();
+{
+		return rowSource.rowInserted();
+	}
+final boolean rowInserted(){
+		return rowSource.rowInserted();
+	}
+return rowSource.rowDeleted();
+{
+		return rowSource.rowDeleted();
+	}
+final boolean rowDeleted() {
+		return rowSource.rowDeleted();
+	}
+
+-------- New Clone Class -------------
+Thread thread = (Thread)threadList.get(i);
+thread.join(5000);
+{
+            Thread thread = (Thread)threadList.get(i);
+            thread.join(5000);
+        }
+// wait until all threads are finish
+        for(int i = 0; i < threadList.size(); i++){
+            Thread thread = (Thread)threadList.get(i);
+            thread.join(5000);
+        }
+throw throwable;
+{
+            throw throwable;
+        }
+// wait until all threads are finish
+        for(int i = 0; i < threadList.size(); i++){
+            Thread thread = (Thread)threadList.get(i);
+            thread.join(5000);
+        }
+
+-------- New Clone Class -------------
+Iterator values = locks.values().iterator();
+TableStorePage lock = (TableStorePage)values.next();
+return null;
+if(lock.con != con) return null;
+{
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+while(values.hasNext()){
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+{
+							Iterator values = locks.values().iterator();
+							while(values.hasNext()){
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+						}
+
+-------- New Clone Class -------------
+return rowSource.rowInserted();
+{
+		return rowSource.rowInserted();
+	}
+final boolean rowInserted(){
+		return rowSource.rowInserted();
+	}
+return rowSource.rowDeleted();
+{
+		return rowSource.rowDeleted();
+	}
+final boolean rowDeleted() {
+		return rowSource.rowDeleted();
+	}
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+con.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
+assertRowCount( 0, "Select * from transactions");
+con.createStatement().execute("Insert Into transactions(v) Values('qwert')");
+assertRowCount( 1, "Select * from transactions");
+con.setAutoCommit(false);
+con.createStatement().execute("Insert Into transactions(v) Select v From transactions");
+assertRowCount( 2, "Select * from transactions");
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+st.execute("drop table " + table);
+st.close();
+{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }
+Throwable e
+st.close();
+{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }
+Throwable e
+{/* Empty because not supported for the most Commands */}
+catch(Throwable e){
+            //e.printStackTrace();
+        }
+
+-------- New Clone Class -------------
+con.createStatement().execute("Drop Table transactions");
+{
+				con.createStatement().execute("Drop Table transactions");
+			}
+Throwable e
+e.printStackTrace();
+{
+            e.printStackTrace();
+        }
+catch(Throwable e){
+            e.printStackTrace();
+        }
+try{
+				con.createStatement().execute("Drop Table transactions");
+			}catch(Throwable e){e.printStackTrace();}
+con.setAutoCommit(true);
+{
+			try{
+				con.createStatement().execute("Drop Table transactions");
+			}catch(Throwable e){e.printStackTrace();}
+			con.setAutoCommit(true);
+		}
+
+-------- New Clone Class -------------
+raFile = Utils.openRaFile( file, database.isReadOnly() );
+ByteBuffer buffer = ByteBuffer.allocate(8);
+raFile.read(buffer);
+buffer.position(0);
+int magic   = buffer.getInt();
+int version = buffer.getInt();
+
+-------- New Clone Class -------------
+case SQLTokenizer.TINYINT:
+return readUnsignedByte();
+case SQLTokenizer.SMALLINT:
+return readShort();
+case SQLTokenizer.INT:
+return readInt();
+case SQLTokenizer.BIGINT:
+return readLong();
+case SQLTokenizer.REAL:
+return readFloat();
+case SQLTokenizer.FLOAT:
+case SQLTokenizer.DOUBLE:
+
+-------- New Clone Class -------------
+break;
+case SQLTokenizer.CHAR:
+case SQLTokenizer.VARCHAR:
+case SQLTokenizer.LONGVARCHAR:
+String str = expr.getString();
+value = str;
+
+-------- New Clone Class -------------
+long time = -System.currentTimeMillis();
+pr.setBytes (  1, byteArray );
+pr.setString(  2 , "Test" );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+pr.setFloat (  4, (float)1234.56789 );
+pr.setFloat (  5 , (float)9876.54321 );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+
+-------- New Clone Class -------------
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+formatHour12( details.hour, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+
+-------- New Clone Class -------------
+case SQLTokenizer.CHAR:
+case SQLTokenizer.NCHAR:
+case SQLTokenizer.VARCHAR:
+case SQLTokenizer.NVARCHAR:
+return readString();
+case SQLTokenizer.CLOB:
+case SQLTokenizer.NCLOB:
+case SQLTokenizer.LONGNVARCHAR:
+case SQLTokenizer.LONGVARCHAR:
+return readLongString();
+case SQLTokenizer.JAVA_OBJECT:
+ByteArrayInputStream bais = new ByteArrayInputStream(readLongBinary());
+ObjectInputStream ois = new ObjectInputStream(bais);
+
+-------- New Clone Class -------------
+buf.append( SHORT_MONTHS[ details.month ]);
+buf.append(' ');
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+formatHour12( details.hour, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+
+-------- New Clone Class -------------
+dropTable( AllTests.getConnection(), table );
+{
+            dropTable( AllTests.getConnection(), table );
+        }
+SQLException ex
+ex.printStackTrace();
+{
+            ex.printStackTrace();
+        }
+catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+try {
+            dropTable( AllTests.getConnection(), table );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+{
+        try {
+            dropTable( AllTests.getConnection(), table );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+public void tearDown(){
+        try {
+            dropTable( AllTests.getConnection(), table );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+
+-------- New Clone Class -------------
+con.createStatement().execute("Drop Table transactions");
+{
+				con.createStatement().execute("Drop Table transactions");
+			}
+Throwable e
+e.printStackTrace();
+{
+            e.printStackTrace();
+        }
+catch(Throwable e){
+            e.printStackTrace();
+        }
+try{
+				con.createStatement().execute("Drop Table transactions");
+			}catch(Throwable e){e.printStackTrace();}
+con.setAutoCommit(true);
+
+-------- New Clone Class -------------
+//there are more entries in this node
+				result |= (((long)nextEntry) << shift);
+listEnum.offsetStack[listEnum.stack] = offset;
+return result;
+{
+					listEnum.offsetStack[listEnum.stack] = offset;
+					return result;
+				}
+if(listEnum.stack>=3){
+					listEnum.offsetStack[listEnum.stack] = offset;
+					return result;
+				}
+listEnum.offsetStack[listEnum.stack] = offset+pointerSize;
+offset = getPointer();
+shift -= 16;
+listEnum.stack++;
+listEnum.resultStack[listEnum.stack] = result;
+
+-------- New Clone Class -------------
+return size;
+{
+		return size;
+	}
+final int size(){
+		return size;
+	}
+int idx
+throw new IndexOutOfBoundsException("Index: "+idx+", Size: "+size);
+if (idx >= size)
+			throw new IndexOutOfBoundsException("Index: "+idx+", Size: "+size);
+return data[idx];
+{
+		if (idx >= size)
+			throw new IndexOutOfBoundsException("Index: "+idx+", Size: "+size);
+		return data[idx];
+	}
+
+-------- New Clone Class -------------
+java.io.FileOutputStream fos = new java.io.FileOutputStream(tableName+".bin");
+byte bytes[] = new byte[1024];
+fos.write(bytes);
+{
+                fos.write(bytes);
+            }
+for(int i=0; i<rowCount; i++){
+                fos.write(bytes);
+            }
+fos.close();
+java.io.FileInputStream fis = new java.io.FileInputStream(tableName+".bin");
+long time = -System.currentTimeMillis();
+
+-------- New Clone Class -------------
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+formatHour12( details.hour, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+formatHour12( details.hour, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append(':');
+
+-------- New Clone Class -------------
+return null;
+if(isNull()) return null;
+int dataType = getDataType();
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? Boolean.TRUE : Boolean.FALSE;
+case SQLTokenizer.BINARY:
+case SQLTokenizer.VARBINARY:
+return getBytes();
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+case SQLTokenizer.INT:
+return new Integer( getInt() );
+case SQLTokenizer.BIGINT:
+return new Long( getLong() );
+case SQLTokenizer.REAL:
+return new Float( getFloat() );
+case SQLTokenizer.FLOAT:
+case SQLTokenizer.DOUBLE:
+return new Double( getDouble() );
+case SQLTokenizer.MONEY:
+case SQLTokenizer.SMALLMONEY:
+return Money.createFromUnscaledValue( getMoney() );
+case SQLTokenizer.NUMERIC:
+case SQLTokenizer.DECIMAL:
+return getNumeric();
+case SQLTokenizer.CHAR:
+case SQLTokenizer.NCHAR:
+case SQLTokenizer.VARCHAR:
+case SQLTokenizer.NVARCHAR:
+case SQLTokenizer.LONGNVARCHAR:
+case SQLTokenizer.LONGVARCHAR:
+
+-------- New Clone Class -------------
+int type
+RowSource left
+RowSource right
+Expression condition
+this.type 		= type;
+this.condition = condition;
+this.left  = left;
+this.right  = right;
+
+-------- New Clone Class -------------
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+return buf.toString();
+
+-------- New Clone Class -------------
+case IN:
+case EQUALS_NULL:
+case EQUALS:
+return comp == 0;
+case GREATER:
+return comp >  0;
+case GRE_EQU:
+return comp >= 0;
+case LESSER:
+return comp <  0;
+case LES_EQU:
+return comp <= 0;
+case UNEQUALS:
+return comp != 0;
+case BETWEEN:
+
+-------- New Clone Class -------------
+pr.setObject( 1, testValue.small);
+pr.setObject( 2, testValue.large);
+rs = pr.executeQuery();
+assertTrue( "To few rows", rs.next() );
+assertTrue( "To few rows", rs.next() );
+assertFalse( "To many rows", rs.next() );
+pr.close();
+
+-------- New Clone Class -------------
+formatNumber( details.year,  4, buf );
+buf.append('-');
+formatNumber( details.month + 1, 2, buf );
+buf.append('-');
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+return buf.toString();
+
+-------- New Clone Class -------------
+case SQLTokenizer.TINYINT:
+return readUnsignedByte();
+case SQLTokenizer.SMALLINT:
+return readShort();
+case SQLTokenizer.INT:
+return readInt();
+case SQLTokenizer.BIGINT:
+return readLong();
+case SQLTokenizer.REAL:
+
+-------- New Clone Class -------------
+Object obj = getObject();
+return null;
+if(obj == null) return null;
+return obj.toString();
+{
+        Object obj = getObject();
+        if(obj == null) return null;
+        return obj.toString();
+    }
+String getString() throws Exception{
+        Object obj = getObject();
+        if(obj == null) return null;
+        return obj.toString();
+    }
+
+-------- New Clone Class -------------
+int[] offsets
+int[] dataTypes
+{/* Empty because not supported for the most Commands */}
+void scanObjectOffsets(int[] offsets, int[] dataTypes) {
+		// TODO Auto-generated method stub
+
+	}
+return 0;
+{
+                    return 0;
+                }
+int getUsedSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+-------- New Clone Class -------------
+Throwable e
+raFile.close();
+{
+        raFile.close();
+    }
+Exception e2
+DriverManager.println(e2.toString());
+{
+                    DriverManager.println(e2.toString());
+                }
+catch(Exception e2){
+                    DriverManager.println(e2.toString());
+                }
+try{
+                    raFile.close();
+                }catch(Exception e2){
+                    DriverManager.println(e2.toString());
+                }
+if(raFile != null)
+                try{
+                    raFile.close();
+                }catch(Exception e2){
+                    DriverManager.println(e2.toString());
+                }
+throw SmallSQLException.createFromException(e);
+{
+            if(raFile != null)
+                try{
+                    raFile.close();
+                }catch(Exception e2){
+                    DriverManager.println(e2.toString());
+                }
+            throw SmallSQLException.createFromException(e);
+        }
+catch(Throwable e){
+            if(raFile != null)
+                try{
+                    raFile.close();
+                }catch(Exception e2){
+                    DriverManager.println(e2.toString());
+                }
+            throw SmallSQLException.createFromException(e);
+        }
+
+-------- New Clone Class -------------
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append('.');
+buf.append(':');
+formatNumber( details.second, 2, buf );
+
+-------- New Clone Class -------------
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append(':');
+buf.append(':');
+formatNumber( details.second, 2, buf );
+
+-------- New Clone Class -------------
+case SQLTokenizer.LONGVARBINARY:
+return getBytes();
+case SQLTokenizer.DATE:
+case SQLTokenizer.TIME:
+case SQLTokenizer.TIMESTAMP:
+case SQLTokenizer.SMALLDATETIME:
+return new DateTime( getLong(), dataType );
+case SQLTokenizer.UNIQUEIDENTIFIER:
+return getBytes();
+default:
+
+-------- New Clone Class -------------
+case SQLTokenizer.INT:
+case SQLTokenizer.REAL:
+case SQLTokenizer.SMALLMONEY:
+case SQLTokenizer.TIME:
+case SQLTokenizer.DATE:
+case SQLTokenizer.SMALLDATETIME:
+
+-------- New Clone Class -------------
+pr.setObject( 1, testValue.small);
+pr.setObject( 2, testValue.large);
+pr.execute();
+pr.setObject( 1, testValue.small);
+pr.setObject( 2, testValue.small);
+pr.execute();
+pr.setObject( 1, testValue.large);
+pr.setObject( 2, testValue.large);
+pr.execute();
+pr.setObject( 1, testValue.large);
+pr.setObject( 2, testValue.small);
+pr.execute();
+pr.setObject( 1, null);
+pr.setObject( 2, testValue.small);
+pr.execute();
+pr.setObject( 1, testValue.small);
+pr.setObject( 2, null);
+pr.execute();
+pr.setObject( 1, null);
+pr.setObject( 2, null);
+pr.execute();
+
+-------- New Clone Class -------------
+PreparedStatement pr = con.prepareStatement( "UPDATE " + tableName + " SET bi=?,c=?,d=?,de=?,f=?,im=?,i=?,m=?,n=?,r=?,sd=?,si=?,sm=?,sy=?,t=?,ti=?,vb=?,vc=? WHERE i=?" );
+long time = -System.currentTimeMillis();
+pr.setBytes (  1, byteArray );
+pr.setString(  2 , "Test" );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+pr.setFloat (  4, (float)1234.56789 );
+pr.setFloat (  5 , (float)9876.54321 );
+pr.setBytes (  6, largeByteArray );
+
+-------- New Clone Class -------------
+rs.getString("v");
+fail("SQLException 'No current row' should be throw");
+{
+            rs.getString("v");
+            fail("SQLException 'No current row' should be throw");
+        }
+SQLException ex
+assertSQLException( "01000", 0, ex );
+{
+                assertSQLException( "01000", 0, ex );
+            }
+catch (SQLException ex) {
+                assertSQLException( "01000", 0, ex );
+            }
+try{
+            rs.getString("v");
+            fail("SQLException 'No current row' should be throw");
+        }catch(SQLException ex){
+            assertSQLException( "01000", 0, ex );
+        }
+
+-------- New Clone Class -------------
+rowSource.nullRow();
+row = 0;
+{
+		rowSource.nullRow();
+		row = 0;
+	}
+final void nullRow() {
+		rowSource.nullRow();
+		row = 0;
+	}
+rowSource.noRow();
+row = 0;
+final void nullRow() {
+		rowSource.nullRow();
+		row = 0;
+	}
+rowSource.noRow();
+
+-------- New Clone Class -------------
+return false;
+if(isNull()) return false;
+return Utils.string2boolean(getString().trim());
+{
+		if(isNull()) return false;
+		return Utils.string2boolean(getString().trim());
+	}
+final boolean getBoolean() throws Exception {
+		if(isNull()) return false;
+		return Utils.string2boolean(getString().trim());
+	}
+return 0;
+if(isNull()) return 0;
+return Integer.parseInt(getString().trim());
+{
+		if(isNull()) return 0;
+		return Integer.parseInt(getString().trim());
+	}
+final int getInt() throws Exception {
+		if(isNull()) return 0;
+		return Integer.parseInt(getString().trim());
+	}
+return 0;
+if(isNull()) return 0;
+return Long.parseLong(getString().trim());
+{
+		if(isNull()) return 0;
+		return Long.parseLong(getString().trim());
+	}
+final long getLong() throws Exception {
+		if(isNull()) return 0;
+		return Long.parseLong(getString().trim());
+	}
+return 0;
+if(isNull()) return 0;
+return Float.parseFloat(getString().trim());
+{
+		if(isNull()) return 0;
+		return Float.parseFloat(getString().trim());
+	}
+final float getFloat() throws Exception {
+		if(isNull()) return 0;
+		return Float.parseFloat(getString().trim());
+	}
+return 0;
+if(isNull()) return 0;
+return Double.parseDouble(getString().trim());
+{
+		if(isNull()) return 0;
+		return Double.parseDouble(getString().trim());
+	}
+final double getDouble() throws Exception {
+		if(isNull()) return 0;
+		return Double.parseDouble(getString().trim());
+	}
+return 0;
+if(isNull()) return 0;
+return Money.parseMoney(getString().trim());
+{
+		if(isNull()) return 0;
+		return Money.parseMoney(getString().trim());
+	}
+final long getMoney() throws Exception {
+		if(isNull()) return 0;
+		return Money.parseMoney(getString().trim());
+	}
+return null;
+if(isNull()) return null;
+return new MutableNumeric(getString().trim());
+{
+		if(isNull()) return null;
+		return new MutableNumeric(getString().trim());
+	}
+final MutableNumeric getNumeric() throws Exception {
+		if(isNull()) return null;
+		return new MutableNumeric(getString().trim());
+	}
+
+-------- New Clone Class -------------
+rs.next();
+int count = rs.getInt(1);
+System.out.println( "  Failed: Only " + count + " rows were inserted.");
+System.out.println( "  Test time: " + time + " ms");
+if (count != rowCount)
+                System.out.println( "  Failed: Only " + count + " rows were inserted.");
+            else System.out.println( "  Test time: " + time + " ms");
+st.close();
+
+-------- New Clone Class -------------
+Iterator values = locks.values().iterator();
+TableStorePage lock = (TableStorePage)values.next();
+return null;
+if(lock.con != con) return null;
+{
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+while(values.hasNext()){
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+if(lock.con != con) return null;
+
+-------- New Clone Class -------------
+return size;
+{
+		return size;
+	}
+final int size(){
+		return size;
+	}
+int idx
+throw new IndexOutOfBoundsException("Index: "+idx+", Size: "+size);
+if (idx >= size)
+			throw new IndexOutOfBoundsException("Index: "+idx+", Size: "+size);
+
+-------- New Clone Class -------------
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+case SQLTokenizer.TINYINT:
+offset++;
+break;
+case SQLTokenizer.SMALLINT:
+
+-------- New Clone Class -------------
+dataType = expr.getDataType();
+initValue( expr );
+if(expr.isNull())
+						dataType = expr.getDataType();
+					else
+						initValue( expr );
+{
+					if(expr.isNull())
+						dataType = expr.getDataType();
+					else
+						initValue( expr );
+				}
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+case SQLTokenizer.INT:
+
+-------- New Clone Class -------------
+node = node.getChildNode(digit);
+return null;
+if(node == null) return null;
+nodeList.add(node);
+if(nodeList != null) nodeList.add(node);
+return node;
+{
+				return node;
+			}
+
+-------- New Clone Class -------------
+return rowSource.rowInserted();
+{
+		return rowSource.rowInserted();
+	}
+final boolean rowInserted(){
+		return rowSource.rowInserted();
+	}
+return rowSource.rowDeleted();
+{
+		return rowSource.rowDeleted();
+	}
+final boolean rowDeleted() {
+		return rowSource.rowDeleted();
+	}
+rowSource.nullRow();
+
+-------- New Clone Class -------------
+int value
+int tokenStart
+int tokenEnd
+this.value      = value;
+this.offset = tokenStart;
+this.length = tokenEnd-tokenStart;
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+st.execute("drop table " + table);
+st.close();
+{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }
+Throwable e
+{/* Empty because not supported for the most Commands */}
+catch(Throwable e){
+            //e.printStackTrace();
+        }
+try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+{
+        try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+    }
+public void tearDown(){
+        try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+    }
+tearDown();
+
+-------- New Clone Class -------------
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append(':');
+formatMillis( details.millis, buf );
+return buf.toString();
+
+-------- New Clone Class -------------
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append('.');
+formatMillis( details.millis, buf );
+return buf.toString();
+
+-------- New Clone Class -------------
+formatNumber( details.year,  4, buf );
+buf.append('-');
+formatNumber( details.month + 1, 2, buf );
+buf.append('-');
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append('.');
+formatMillis( details.millis, buf );
+return buf.toString();
+
+-------- New Clone Class -------------
+return param1.isNull() || param2.isNull();
+{
+        return param1.isNull() || param2.isNull();
+    }
+boolean isNull() throws Exception{
+        return param1.isNull() || param2.isNull();
+    }
+return 0;
+if(isNull()) return 0;
+final int places = param2.getInt();
+double value = param1.getDouble();
+long factor = 1;
+factor *= 10;
+{
+				factor *= 10;
+			}
+for(int i=0; i<places; i++){
+				factor *= 10;
+			}
+value *= factor;
+{
+			for(int i=0; i<places; i++){
+				factor *= 10;
+			}
+			value *= factor;
+		}
+factor *= 10;
+{
+				factor *= 10;
+			}
+for(int i=0; i>places; i--){
+				factor *= 10;
+			}
+value /= factor;
+{
+			for(int i=0; i>places; i--){
+				factor *= 10;
+			}
+			value /= factor;
+		}
+if(places > 0){
+			for(int i=0; i<places; i++){
+				factor *= 10;
+			}
+			value *= factor;
+		}else{
+			for(int i=0; i>places; i--){
+				factor *= 10;
+			}
+			value /= factor;
+		}
+
+-------- New Clone Class -------------
+buf.append(' ');
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append(':');
+formatMillis( details.millis, buf );
+return buf.toString();
+
+-------- New Clone Class -------------
+buf.append(' ');
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+
+-------- New Clone Class -------------
+Exception e
+System.out.println("  Failed:"+e);
+{
+            System.out.println("  Failed:"+e);
+        }
+catch(Exception e){
+            System.out.println("  Failed:"+e);
+        }
+System.out.println();
+System.out.println("===================================================================");
+{
+            System.out.println();
+            System.out.println("===================================================================");
+        }
+
+-------- New Clone Class -------------
+Thread thread = (Thread)threadList.get(i);
+thread.join(5000);
+{
+            Thread thread = (Thread)threadList.get(i);
+            thread.join(5000);
+        }
+// wait until all threads are finish
+        for(int i = 0; i < threadList.size(); i++){
+            Thread thread = (Thread)threadList.get(i);
+            thread.join(5000);
+        }
+throw throwable;
+{
+            throw throwable;
+        }
+// throw the exception if one occur
+        if(throwable != null){
+            throw throwable;
+        }
+assertEqualsRsValue(new Integer(200), "SELECT value FROM ConcurrentWrite");
+
+-------- New Clone Class -------------
+assertTrue(rs.next());
+oldValue = rs.getString("v");
+int count = 1;
+String newValue = rs.getString("v");
+assertTrue( oldValue.compareTo( newValue ) > 0 );
+count++;
+{
+				assertTrue( oldValue.compareTo( newValue ) > 0 );
+				count++;
+			}
+if(newValue != null){
+				assertTrue( oldValue.compareTo( newValue ) > 0 );
+				count++;
+			}
+oldValue = newValue;
+{
+			String newValue = rs.getString("v");
+			if(newValue != null){
+				assertTrue( oldValue.compareTo( newValue ) > 0 );
+				count++;
+			}
+			oldValue = newValue;
+		}
+while(oldValue != null && rs.next()){
+			String newValue = rs.getString("v");
+			if(newValue != null){
+				assertTrue( oldValue.compareTo( newValue ) > 0 );
+				count++;
+			}
+			oldValue = newValue;
+		}
+assertNull(oldValue);
+assertFalse(rs.next());
+assertEquals( valueCount, count );
+
+-------- New Clone Class -------------
+con1.createStatement().execute("Create Table transactions (i int identity, v varchar(20))");
+assertRowCount( 0, "Select * from transactions");
+con1.setAutoCommit(false);
+con1.createStatement().execute("Insert Into transactions(v) Values('qwert2')");
+ResultSet rs2 = con2.createStatement().executeQuery("Select count(*) from transactions");
+assertTrue( rs2.next() );
+
+-------- New Clone Class -------------
+int valueOffset
+int dataType
+this.offset = valueOffset;
+return 0;
+if(readBoolean()) return 0;
+case SQLTokenizer.BIT:
+return 0;
+
+-------- New Clone Class -------------
+Statement stat = conn.createStatement();
+recreateTestTab(stat);
+stat.execute("CREATE TABLE " + TABLE_NAME + " (id_test INT)");
+fail();
+{
+			recreateTestTab(stat);
+			
+			stat.execute("CREATE TABLE " + TABLE_NAME + " (id_test INT)");
+			fail();
+		}
+SQLException e
+assertMessage(e, "La tabella/vista '" + TABLE_NAME + "' è già esistente.");
+{
+			assertMessage(e, "La tabella/vista '" + TABLE_NAME + "' è già esistente.");
+		}
+catch (SQLException e) {
+			assertMessage(e, "La tabella/vista '" + TABLE_NAME + "' è già esistente.");
+		}
+
+-------- New Clone Class -------------
+assertEquals( 1, con.createStatement().executeUpdate("Update transactions set v='qwert1'") );
+assertEqualsRsValue("qwert1", "Select * from transactions");
+assertEqualsRsValue(new Integer(1), "Select count(*) from transactions");
+assertEquals( 1, con.createStatement().executeUpdate("Update transactions set v='qwert2'") );
+assertEqualsRsValue("qwert2", "Select * from transactions");
+assertEqualsRsValue(new Integer(1), "Select count(*) from transactions");
+Savepoint savepoint = con.setSavepoint();
+assertEquals( 1, con.createStatement().executeUpdate("Update transactions set v='qwert 3'") );
+assertEqualsRsValue("qwert 3", "Select * from transactions");
+assertEqualsRsValue(new Integer(1), "Select count(*) from transactions");
+
+-------- New Clone Class -------------
+return size;
+{
+		return size;
+	}
+final int size(){
+		return size;
+	}
+int idx
+throw new IndexOutOfBoundsException("Column index: "+idx+", Size: "+size);
+if (idx >= size)
+			throw new IndexOutOfBoundsException("Column index: "+idx+", Size: "+size);
+return data[idx];
+{
+		if (idx >= size)
+			throw new IndexOutOfBoundsException("Column index: "+idx+", Size: "+size);
+		return data[idx];
+	}
+
+-------- New Clone Class -------------
+return (int)value;
+{
+		return (int)value;
+	}
+@Override
+    public int intValue() {
+		return (int)value;
+	}
+return (long)value;
+{
+		return (long)value;
+	}
+public long longValue() {
+		return (long)value;
+	}
+return String.valueOf(value);
+{
+	    return String.valueOf(value);
+	}
+@Override
+    public String toString(){
+	    return String.valueOf(value);
+	}
+
+-------- New Clone Class -------------
+assertTrue(rs.next());
+oldValue = rs.getString("v");
+assertNull(oldValue);
+assertTrue(rs.next());
+oldValue = rs.getString("v");
+int count = 1;
+String newValue = rs.getString("v");
+
+-------- New Clone Class -------------
+Statement st1 = con.createStatement();
+ResultSet rs = st1.executeQuery( "SELECT count(*) FROM " + tableName);
+rs.next();
+int count = rs.getInt(1);
+createTestDataWithClassicInsert( con );
+rs = st1.executeQuery( "SELECT count(*) FROM " + tableName);
+rs.next();
+count = rs.getInt(1);
+{
+                    createTestDataWithClassicInsert( con );
+                    rs = st1.executeQuery( "SELECT count(*) FROM " + tableName);
+                    rs.next();
+                    count = rs.getInt(1);
+                }
+// There are not the correct count of rows.
+                if (count == 0){
+                    createTestDataWithClassicInsert( con );
+                    rs = st1.executeQuery( "SELECT count(*) FROM " + tableName);
+                    rs.next();
+                    count = rs.getInt(1);
+                }
+
+-------- New Clone Class -------------
+long time = -System.currentTimeMillis();
+pr.setBytes (  1, byteArray );
+pr.setString(  2 , "Test" );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+pr.setFloat (  4, (float)1234.56789 );
+pr.setFloat (  5 , (float)9876.54321 );
+pr.setBytes (  6, largeByteArray );
+pr.setInt   (  7 , i );
+pr.setDouble(  8 , 23.45 );
+pr.setDouble(  9 , 567.45 );
+pr.setFloat (  10 , (float)78.89 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setString(  14, "sysname (30) NULL" );
+pr.setString(  15 , "text NULL" );
+pr.setByte  (  16, (byte)28 );
+pr.setBytes (  17, byteArray );
+pr.setString(  18, "varchar (255) NULL" );
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+st.execute("drop table " + table);
+st.close();
+{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }
+Throwable e
+st.close();
+{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }
+Throwable e
+{/* Empty because not supported for the most Commands */}
+catch(Throwable e){
+            //e.printStackTrace();
+        }
+try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+
+-------- New Clone Class -------------
+return param1.isNull();
+{
+        return param1.isNull();
+    }
+boolean isNull() throws Exception {
+        return param1.isNull();
+    }
+return null;
+if(isNull()) return null;
+byte[] bytes = param1.getBytes();
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+st.execute("drop table " + table);
+st.close();
+{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }
+Throwable e
+{/* Empty because not supported for the most Commands */}
+catch(Throwable e){
+            //e.printStackTrace();
+        }
+try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+{
+        try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+    }
+public void tearDown(){
+        try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+    }
+
+-------- New Clone Class -------------
+int valueOffset
+int dataType
+this.offset = valueOffset;
+return null;
+if(readBoolean()) return null;
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+
+-------- New Clone Class -------------
+case SQLTokenizer.TINYINT:
+return readUnsignedByte();
+case SQLTokenizer.SMALLINT:
+return readShort();
+case SQLTokenizer.INT:
+return readInt();
+return readShort();
+
+-------- New Clone Class -------------
+value /= factor;
+{
+			value /= factor;
+		}
+value *= factor;
+{
+			value *= factor;
+		}
+if(places > 0){
+			value /= factor;
+		}else{
+			value *= factor;
+		}
+return value;
+
+-------- New Clone Class -------------
+PreparedStatement pr = con.prepareStatement( "UPDATE " + tableName + " SET bi=?,c=?,d=?,de=?,f=?,im=?,i=?,m=?,n=?,r=?,sd=?,si=?,sm=?,sy=?,t=?,ti=?,vb=?,vc=? WHERE i=?" );
+long time = -System.currentTimeMillis();
+pr.setBytes (  1, byteArray );
+pr.setString(  2 , "Test" );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+pr.setFloat (  4, (float)1234.56789 );
+pr.setString(  2 , "Test" );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+
+-------- New Clone Class -------------
+pr.setDouble(  8 , 23.45 );
+pr.setDouble(  9 , 567.45 );
+pr.setFloat (  10 , (float)78.89 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setString(  14, "sysname (30) NULL" );
+pr.setString(  15 , "text NULL" );
+
+-------- New Clone Class -------------
+return value;
+{
+		return value;
+	}
+@Override
+    public double doubleValue() {
+		return value;
+	}
+return value;
+{
+		return value;
+	}
+@Override
+    public float floatValue() {
+		return value;
+	}
+return (int)value;
+{
+		return (int)value;
+	}
+@Override
+    public int intValue() {
+		return (int)value;
+	}
+
+-------- New Clone Class -------------
+long time = -System.currentTimeMillis();
+pr.setBytes (  1, byteArray );
+pr.setString(  2 , "Test" );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+pr.setFloat (  4, (float)1234.56789 );
+pr.setFloat (  5 , (float)9876.54321 );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+pr.setFloat (  4, (float)1234.56789 );
+pr.setFloat (  5 , (float)9876.54321 );
+pr.setBytes (  6, largeByteArray );
+pr.setInt   (  7 , i );
+pr.setDouble(  8 , 23.45 );
+pr.setDouble(  9 , 567.45 );
+pr.setFloat (  10 , (float)78.89 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setString(  14, "sysname (30) NULL" );
+pr.setString(  15 , "text NULL" );
+
+-------- New Clone Class -------------
+byte[] bytes = param1.getBytes();
+int length = datatype.getPrecision();
+byte[] buffer = new byte[length];
+System.arraycopy(bytes, 0, buffer, 0, Math.min(bytes.length,length) );
+return buffer;
+{
+					byte[] buffer = new byte[length];
+					System.arraycopy(bytes, 0, buffer, 0, Math.min(bytes.length,length) );
+					return buffer;
+				}
+
+-------- New Clone Class -------------
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+buf.append( SHORT_MONTHS[ details.month ]);
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+
+-------- New Clone Class -------------
+return 0;
+if(isNull()) return 0;
+int dataType = getDataType();
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? 1 : 0;
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? 1 : 0;
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+case SQLTokenizer.INT:
+return getIntImpl();
+
+-------- New Clone Class -------------
+case SQLTokenizer.TIMESTAMP:
+return readTimestamp();
+case SQLTokenizer.TIME:
+return readTime();
+case SQLTokenizer.DATE:
+return readDate();
+case SQLTokenizer.SMALLDATETIME:
+return readSmallDateTime();
+default:
+
+-------- New Clone Class -------------
+int i
+Expression expr = getValue(i);
+wasNull = expr.isNull();
+return expr.getLong();
+{
+            Expression expr = getValue(i);
+            wasNull = expr.isNull();
+            return expr.getLong();
+        }
+Exception e
+throw SmallSQLException.createFromException(e);
+{
+        	throw SmallSQLException.createFromException(e);
+        }
+catch(Exception e){
+        	throw SmallSQLException.createFromException(e);
+        }
+try{
+            Expression expr = getValue(i);
+            wasNull = expr.isNull();
+            return expr.getLong();
+        }catch(Exception e){
+            throw SmallSQLException.createFromException( e );
+        }
+{
+        try{
+            Expression expr = getValue(i);
+            wasNull = expr.isNull();
+            return expr.getLong();
+        }catch(Exception e){
+            throw SmallSQLException.createFromException( e );
+        }
+    }
+
+-------- New Clone Class -------------
+assertTrue(rs.next());
+oldValue = (Integer)rs.getObject("i");
+assertNull(oldValue);
+assertTrue(rs.next());
+oldValue = (Integer)rs.getObject("i");
+int count = 1;
+assertTrue( oldValue.compareTo( (Integer)rs.getObject("i") ) < 0 );
+oldValue = (Integer)rs.getObject("i");
+count++;
+{
+			assertTrue( oldValue.compareTo( (Integer)rs.getObject("i") ) < 0 );
+			oldValue = (Integer)rs.getObject("i");
+			count++;
+		}
+while(rs.next()){
+			assertTrue( oldValue.compareTo( (Integer)rs.getObject("i") ) < 0 );
+			oldValue = (Integer)rs.getObject("i");
+			count++;
+		}
+assertEquals( valueCount, count );
+
+-------- New Clone Class -------------
+return param1.isNull() || param2.isNull();
+{
+        return param1.isNull() || param2.isNull();
+    }
+boolean isNull() throws Exception{
+        return param1.isNull() || param2.isNull();
+    }
+return null;
+if(isNull()) return null;
+byte[] bytes = param1.getBytes();
+int length = param2.getInt();
+return bytes;
+if(bytes.length <= length) return bytes;
+byte[] b = new byte[length];
+
+-------- New Clone Class -------------
+String val
+return Double.parseDouble( val ) != 0;
+{
+            return Double.parseDouble( val ) != 0;
+        }
+NumberFormatException e
+{/* Empty because not supported for the most Commands */}
+catch(NumberFormatException e){/*ignore it if it not a number*/}
+try{
+            return Double.parseDouble( val ) != 0;
+        }catch(NumberFormatException e){/*ignore it if it not a number*/}
+return "true".equalsIgnoreCase( val ) || "yes".equalsIgnoreCase( val ) || "t".equalsIgnoreCase( val );
+{
+        try{
+            return Double.parseDouble( val ) != 0;
+        }catch(NumberFormatException e){/*ignore it if it not a number*/}
+        return "true".equalsIgnoreCase( val ) || "yes".equalsIgnoreCase( val ) || "t".equalsIgnoreCase( val );
+    }
+static boolean string2boolean( String val){
+        try{
+            return Double.parseDouble( val ) != 0;
+        }catch(NumberFormatException e){/*ignore it if it not a number*/}
+        return "true".equalsIgnoreCase( val ) || "yes".equalsIgnoreCase( val ) || "t".equalsIgnoreCase( val );
+    }
+
+-------- New Clone Class -------------
+return null;
+if(isNull()) return null;
+return new MutableNumeric(getInt());
+{
+		if(isNull()) return null;
+		return new MutableNumeric(getInt());
+	}
+final MutableNumeric getNumeric() throws Exception {
+		if(isNull()) return null;
+		return new MutableNumeric(getInt());
+	}
+return null;
+if(isNull()) return null;
+return Utils.getInteger(getInt());
+{
+		if(isNull()) return null;
+		return Utils.getInteger(getInt());
+	}
+Object getObject() throws Exception {
+		if(isNull()) return null;
+		return Utils.getInteger(getInt());
+	}
+return null;
+if(isNull()) return null;
+return String.valueOf(getInt());
+{
+		if(isNull()) return null;
+		return String.valueOf(getInt());
+	}
+final String getString() throws Exception {
+		if(isNull()) return null;
+		return String.valueOf(getInt());
+	}
+return SQLTokenizer.INT;
+{
+		return SQLTokenizer.INT;
+	}
+final int getDataType() {
+		return SQLTokenizer.INT;
+	}
+
+-------- New Clone Class -------------
+con.createStatement().execute("Drop Table transactions");
+{
+				con.createStatement().execute("Drop Table transactions");
+			}
+Throwable e
+e.printStackTrace();
+{
+            e.printStackTrace();
+        }
+catch(Throwable e){
+            e.printStackTrace();
+        }
+e.printStackTrace();
+{
+            e.printStackTrace();
+        }
+
+-------- New Clone Class -------------
+int maxRows = Integer.parseInt(token.getName(sql));
+selCmd.setMaxRows(maxRows);
+{
+						int maxRows = Integer.parseInt(token.getName(sql));
+						selCmd.setMaxRows(maxRows);
+					}
+NumberFormatException e
+throw createSyntaxError(token, Language.STXADD_NOT_NUMBER, token.getName(sql));
+{
+						throw createSyntaxError(token, Language.STXADD_NOT_NUMBER, token.getName(sql));
+					}
+catch(NumberFormatException e){
+						throw createSyntaxError(token, Language.STXADD_NOT_NUMBER, token.getName(sql));
+					}
+try{
+						int maxRows = Integer.parseInt(token.getName(sql));
+						selCmd.setMaxRows(maxRows);
+					}catch(NumberFormatException e){
+						throw createSyntaxError(token, Language.STXADD_NOT_NUMBER, token.getName(sql));
+					}
+
+-------- New Clone Class -------------
+String tableName = tables.get(t);
+TableView tab = getTableView( con, tableName);
+continue;
+if(!(tab instanceof Table)) continue;
+IndexDescriptions indexes = ((Table)tab).indexes;
+IndexDescription index = indexes.get(i);
+Strings columns = index.getColumns();
+
+-------- New Clone Class -------------
+SSConnection con
+String table
+List rows = new ArrayList();
+Strings tables = getTables(table);
+String tableName = tables.get(t);
+TableView tab = getTableView( con, tableName);
+continue;
+if(!(tab instanceof Table)) continue;
+IndexDescriptions indexes = ((Table)tab).indexes;
+IndexDescription index = indexes.get(i);
+Strings columns = index.getColumns();
+
+-------- New Clone Class -------------
+pr.setDouble(  8 , 23.45 );
+pr.setDouble(  9 , 567.45 );
+pr.setFloat (  10 , (float)78.89 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setString(  14, "sysname (30) NULL" );
+pr.setString(  15 , "text NULL" );
+pr.setByte  (  16, (byte)28 );
+
+-------- New Clone Class -------------
+pr.setObject( 1, testValue.small);
+pr.setObject( 2, testValue.large);
+rs = pr.executeQuery();
+assertTrue( "To few rows", rs.next() );
+assertTrue( "To few rows", rs.next() );
+assertTrue( "To few rows", rs.next() );
+assertTrue( "To few rows", rs.next() );
+assertTrue( "To few rows", rs.next() );
+assertFalse( "To many rows", rs.next() );
+pr.close();
+
+-------- New Clone Class -------------
+rs.beforeFirst();
+assertTrue("isBeforeFirst", rs.isBeforeFirst() );
+assertFalse("isAfterLast", rs.isAfterLast() );
+assertEquals("getRow", 0, rs.getRow() );
+assertTrue("next", rs.next() );
+assertTrue("isFirst", rs.isFirst() );
+
+-------- New Clone Class -------------
+Iterator values = locks.values().iterator();
+TableStorePage lock = (TableStorePage)values.next();
+return null;
+if(lock.con != con) return null;
+{
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+while(values.hasNext()){
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+{
+							Iterator values = locks.values().iterator();
+							while(values.hasNext()){
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+						}
+if(serializeConnections.size() > 0){
+							Iterator values = locks.values().iterator();
+							while(values.hasNext()){
+								TableStorePage lock = (TableStorePage)values.next();
+								if(lock.con != con) return null;
+							}
+						}
+tabLockConnection = con;
+tabLockCount++;
+TableStorePage lock = new TableStorePage(con, this, LOCK_TAB, page);
+
+-------- New Clone Class -------------
+buf.append( SHORT_MONTHS[ details.month ]);
+buf.append(' ');
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+formatHour12( details.hour, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append(':');
+formatMillis( details.millis, buf );
+buf.append( details.hour < 12 ? "AM" : "PM" );
+return buf.toString();
+
+-------- New Clone Class -------------
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+formatHour12( details.hour, buf );
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append(':');
+formatMillis( details.millis, buf );
+buf.append( details.hour < 12 ? "AM" : "PM" );
+return buf.toString();
+
+-------- New Clone Class -------------
+offset += 2;
+break;
+case SQLTokenizer.INT:
+case SQLTokenizer.REAL:
+case SQLTokenizer.SMALLMONEY:
+case SQLTokenizer.TIME:
+case SQLTokenizer.DATE:
+case SQLTokenizer.SMALLDATETIME:
+offset += 4;
+break;
+case SQLTokenizer.BIGINT:
+case SQLTokenizer.FLOAT:
+case SQLTokenizer.DOUBLE:
+case SQLTokenizer.MONEY:
+case SQLTokenizer.JAVA_OBJECT:
+case SQLTokenizer.LONGVARBINARY:
+case SQLTokenizer.BLOB:
+case SQLTokenizer.CLOB:
+case SQLTokenizer.NCLOB:
+case SQLTokenizer.LONGNVARCHAR:
+case SQLTokenizer.LONGVARCHAR:
+case SQLTokenizer.TIMESTAMP:
+offset += 8;
+break;
+
+-------- New Clone Class -------------
+Object obj
+int dataType
+return 0;
+if(obj == null) return 0;
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return (obj == Boolean.TRUE) ? 1 : 0;
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+case SQLTokenizer.INT:
+case SQLTokenizer.BIGINT:
+
+-------- New Clone Class -------------
+con.createStatement().execute("Drop Table transactions");
+{
+				con.createStatement().execute("Drop Table transactions");
+			}
+Throwable e
+e.printStackTrace();
+{
+            e.printStackTrace();
+        }
+catch(Throwable e){
+            e.printStackTrace();
+        }
+try{
+				con.createStatement().execute("Drop Table transactions");
+			}catch(Throwable e){e.printStackTrace();}
+{
+			try{
+				con.createStatement().execute("Drop Table transactions");
+			}catch(Throwable e){e.printStackTrace();}
+		}
+
+-------- New Clone Class -------------
+int k=tmp.length-1;
+break;
+if(tmp[k] != 0) break;
+for(; k>= 0; k--) if(tmp[k] != 0) break;
+k++;
+byte[] tmp2 = new byte[k];
+System.arraycopy( tmp, 0, tmp2, 0, k);
+
+-------- New Clone Class -------------
+return 0;
+if(isNull()) return 0;
+int dataType = getDataType();
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? 1 : 0;
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+case SQLTokenizer.INT:
+return getIntImpl();
+case SQLTokenizer.BIGINT:
+return getLongImpl();
+case SQLTokenizer.REAL:
+
+-------- New Clone Class -------------
+MutableNumeric num
+num.setScale(scale);
+{
+			num.setScale(scale);
+		}
+setScale(num.scale);
+{
+			setScale(num.scale);
+		}
+if(num.scale > scale){
+			setScale(num.scale);
+		}
+if(num.scale < scale){
+			num.setScale(scale);
+		}else
+		if(num.scale > scale){
+			setScale(num.scale);
+		}
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+st.execute("drop table " + table);
+st.close();
+{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }
+Throwable e
+{/* Empty because not supported for the most Commands */}
+catch(Throwable e){
+            //e.printStackTrace();
+        }
+try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+{
+        try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+    }
+public void tearDown(){
+        try{
+            Connection con = AllTests.getConnection();
+            Statement st = con.createStatement();
+            st.execute("drop table " + table);
+            st.close();
+        }catch(Throwable e){
+            //e.printStackTrace();
+        }
+    }
+tearDown();
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+
+-------- New Clone Class -------------
+int valueOffset
+int dataType
+this.offset = valueOffset;
+return null;
+if(readBoolean()) return null;
+case SQLTokenizer.BIT:
+
+-------- New Clone Class -------------
+assertEquals(1,pr.executeUpdate());
+rs = pr.getGeneratedKeys();
+assertNotNull("RETURN_GENERATED_KEYS", rs);
+assertEquals("ColumnCount",1,rs.getMetaData().getColumnCount());
+assertEquals("ColumnCount","i",rs.getMetaData().getColumnName(1));
+assertRowCount( 1, rs );
+
+-------- New Clone Class -------------
+break;
+case SQLTokenizer.VARBINARY:
+case SQLTokenizer.BINARY:
+case SQLTokenizer.LONGVARBINARY:
+case SQLTokenizer.BLOB:
+case SQLTokenizer.UNIQUEIDENTIFIER:
+
+-------- New Clone Class -------------
+case SQLTokenizer.TINYINT:
+return readUnsignedByte();
+case SQLTokenizer.SMALLINT:
+return readShort();
+case SQLTokenizer.INT:
+return readInt();
+case SQLTokenizer.BIGINT:
+
+-------- New Clone Class -------------
+return 0;
+if(isNull()) return 0;
+int dataType = getDataType();
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? 1 : 0;
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+case SQLTokenizer.INT:
+return getIntImpl();
+case SQLTokenizer.BIGINT:
+
+-------- New Clone Class -------------
+formatNumber( details.year,  4, buf );
+buf.append('-');
+formatNumber( details.month + 1, 2, buf );
+buf.append('-');
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+buf.append('-');
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+formatNumber( details.hour,  2, buf );
+buf.append(':');
+
+-------- New Clone Class -------------
+String dataType
+Object small
+Object large
+TestValue value = new TestValue();
+value.dataType  = dataType;
+value.small     = small;
+value.large     = large;
+return value;
+{
+        TestValue value = new TestValue();
+        value.dataType  = dataType;
+        value.small     = small;
+        value.large     = large;
+        return value;
+    }
+private static TestValue a(String dataType, Object small, Object large){
+        TestValue value = new TestValue();
+        value.dataType  = dataType;
+        value.small     = small;
+        value.large     = large;
+        return value;
+    }
+String dataType;
+Object small;
+Object large;
+private static class TestValue{
+        String dataType;
+        Object small;
+        Object large;
+    }
+
+-------- New Clone Class -------------
+Throwable e
+con.rollback(savepoint);
+throw SmallSQLException.createFromException(e);
+{
+            con.rollback(savepoint);
+            throw SmallSQLException.createFromException(e);
+        }
+catch(Throwable e){
+            con.rollback(savepoint);
+            throw SmallSQLException.createFromException(e);
+        }
+con.commit();
+if(con.getAutoCommit()) con.commit();
+{
+            if(con.getAutoCommit()) con.commit();
+        }
+
+-------- New Clone Class -------------
+Object obj
+int dataType
+return 0;
+if(obj == null) return 0;
+case SQLTokenizer.BIT:
+return (obj.equals(Boolean.TRUE)) ? 1 : 0;
+case SQLTokenizer.INT:
+case SQLTokenizer.BIGINT:
+case SQLTokenizer.DOUBLE:
+
+-------- New Clone Class -------------
+int idx = internalExpressions.indexOf(expr);
+return idx;
+if(idx >= 0) return idx;
+internalExpressions.add(expr);
+return internalExpressions.size()-1;
+{
+			int idx = internalExpressions.indexOf(expr);
+			if(idx >= 0) return idx;
+			internalExpressions.add(expr);
+			return internalExpressions.size()-1;
+		}
+
+-------- New Clone Class -------------
+return 0;
+if(isNull()) return 0;
+int dataType = getDataType();
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? 1 : 0;
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? 1 : 0;
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+
+-------- New Clone Class -------------
+pr.close();
+time += System.currentTimeMillis();
+System.out.println( "  Test time: " + time + " ms");
+fis.close();
+java.io.File file = new java.io.File(tableName+".bin");
+file.delete();
+
+-------- New Clone Class -------------
+String newValue = rs.getString("v");
+assertTrue( oldValue.compareTo( newValue ) < 0 );
+oldValue = newValue;
+count++;
+{
+			String newValue = rs.getString("v");
+			assertTrue( oldValue.compareTo( newValue ) < 0 );
+			oldValue = newValue;
+			count++;
+		}
+while(rs.next()){
+			String newValue = rs.getString("v");
+			assertTrue( oldValue.compareTo( newValue ) < 0 );
+			oldValue = newValue;
+			count++;
+		}
+
+-------- New Clone Class -------------
+PreparedStatement pr = con.prepareStatement( "UPDATE " + tableName + " SET bi=?,c=?,d=?,de=?,f=?,im=?,i=?,m=?,n=?,r=?,sd=?,si=?,sm=?,sy=?,t=?,ti=?,vb=?,vc=? WHERE i=?" );
+long time = -System.currentTimeMillis();
+pr.setBytes (  1, byteArray );
+pr.setString(  2 , "Test" );
+pr.setDate  (  3 , new Date( System.currentTimeMillis() ) );
+pr.setFloat (  4, (float)1234.56789 );
+pr.setFloat (  5 , (float)9876.54321 );
+pr.setBytes (  6, largeByteArray );
+pr.setInt   (  7 , i );
+pr.setDouble(  8 , 23.45 );
+pr.setDouble(  9 , 567.45 );
+pr.setFloat (  10 , (float)78.89 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setString(  14, "sysname (30) NULL" );
+pr.setString(  15 , "text NULL" );
+pr.setByte  (  16, (byte)28 );
+pr.setBytes (  17, byteArray );
+pr.setString(  18, "varchar (255) NULL" );
+pr.setInt   (  19 , i );
+
+-------- New Clone Class -------------
+pr.setDouble(  8 , 23.45 );
+pr.setDouble(  9 , 567.45 );
+pr.setFloat (  10 , (float)78.89 );
+pr.setTime  (  11, new Time( System.currentTimeMillis() ) );
+pr.setShort (  12, (short)23456 );
+pr.setFloat (  13, (float)34.56 );
+pr.setString(  14, "sysname (30) NULL" );
+pr.setString(  15 , "text NULL" );
+pr.setByte  (  16, (byte)28 );
+pr.setBytes (  17, byteArray );
+pr.setString(  18, "varchar (255) NULL" );
+pr.setInt   (  19 , i );
+
+-------- New Clone Class -------------
+return param1.isNull();
+{
+        return param1.isNull();
+    }
+boolean isNull() throws Exception {
+        return param1.isNull();
+    }
+return 0;
+if(isNull()) return 0;
+String str = param1.getString();
+
+-------- New Clone Class -------------
+buf.append( SHORT_MONTHS[ details.month ]);
+buf.append(' ');
+formatNumber( details.day,   2, buf );
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+buf.append(' ');
+formatNumber( details.year,  4, buf );
+buf.append(' ');
+
+-------- New Clone Class -------------
+assertEquals("getRow", 1, rs.getRow() );
+assertTrue("isLast", rs.isLast() );
+assertFalse("next", rs.next() );
+assertFalse("isBeforeFirst", rs.isBeforeFirst() );
+assertTrue("isAfterLast", rs.isAfterLast() );
+assertEquals("getRow", 0, rs.getRow() );
+assertTrue("first", rs.first() );
+assertEquals("getRow", 1, rs.getRow() );
+assertFalse("previous", rs.previous() );
+assertEquals("getRow", 0, rs.getRow() );
+assertTrue("isBeforeFirst", rs.isBeforeFirst() );
+assertFalse("isAfterLast", rs.isAfterLast() );
+assertTrue("last", rs.last() );
+assertEquals("getRow", 1, rs.getRow() );
+assertTrue("isLast", rs.isLast() );
+rs.afterLast();
+assertFalse("isBeforeFirst", rs.isBeforeFirst() );
+assertTrue("isAfterLast", rs.isAfterLast() );
+assertEquals("getRow", 0, rs.getRow() );
+
+-------- New Clone Class -------------
+return 0;
+if(isNull()) return 0;
+int dataType = getDataType();
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return getBoolean() ? 1 : 0;
+case SQLTokenizer.TINYINT:
+case SQLTokenizer.SMALLINT:
+case SQLTokenizer.INT:
+return getIntImpl();
+case SQLTokenizer.BIGINT:
+return getLongImpl();
+case SQLTokenizer.REAL:
+return getFloatImpl();
+case SQLTokenizer.FLOAT:
+case SQLTokenizer.DOUBLE:
+case SQLTokenizer.MONEY:
+case SQLTokenizer.SMALLMONEY:
+case SQLTokenizer.NUMERIC:
+case SQLTokenizer.DECIMAL:
+
+-------- New Clone Class -------------
+case SQLTokenizer.TINYINT:
+return readUnsignedByte();
+case SQLTokenizer.SMALLINT:
+return readShort();
+case SQLTokenizer.INT:
+return readInt();
+return readShort();
+case SQLTokenizer.INT:
+return readInt();
+
+-------- New Clone Class -------------
+return getInt();
+{
+		return getInt();
+	}
+final long getLong() throws Exception {
+		return getInt();
+	}
+return getInt();
+{
+		return getInt();
+	}
+final float getFloat() throws Exception {
+		return getInt();
+	}
+return getInt();
+{
+		return getInt();
+	}
+final double getDouble() throws Exception {
+		return getInt();
+	}
+
+-------- New Clone Class -------------
+case SQLTokenizer.FLOAT:
+case SQLTokenizer.DOUBLE:
+case SQLTokenizer.MONEY:
+case SQLTokenizer.SMALLMONEY:
+case SQLTokenizer.NUMERIC:
+case SQLTokenizer.DECIMAL:
+
+-------- New Clone Class -------------
+ArrayList threadList = new ArrayList();
+throwable = null;
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+st.execute("CREATE TABLE ConcurrentWrite( value int)");
+st.execute("INSERT INTO ConcurrentWrite(value) Values(0)");
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+con.createStatement().execute("Create Table Scrollable (i counter, v varchar(20))");
+assertRowCount( 0, "Select * from Scrollable");
+con.createStatement().execute("Insert Into Scrollable(v) Values('qwert')");
+assertRowCount( 1, "Select * from Scrollable");
+assertRowCount( 0, "Select * from Scrollable Where 1=0");
+Statement st = con.createStatement( ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE );
+
+-------- New Clone Class -------------
+Connection con = AllTests.getConnection();
+Statement st = con.createStatement();
+
+-------- New Clone Class -------------
+rowSource.nullRow();
+row = 0;
+{
+		rowSource.nullRow();
+		row = 0;
+	}
+final void nullRow() {
+		rowSource.nullRow();
+		row = 0;
+	}
+rowSource.noRow();
+row = 0;
+{
+		rowSource.noRow();
+		row = 0;
+	}
+final void noRow() {
+		rowSource.noRow();
+		row = 0;
+	}
+
+-------- New Clone Class -------------
+rs.next();
+rs.next();
+rs.previous();
+rs.last();
+count = 0;
+count++;
+while(rs.previous()) count++;
+assertEquals( valueCount, count );
+rs.beforeFirst();
+count = -1;
+count++;
+while(rs.next()) count++;
+assertEquals( valueCount, count );
+rs.beforeFirst();
+count = -1;
+count++;
+while(rs.next()) count++;
+assertEquals( valueCount, count );
+
+-------- New Clone Class -------------
+int valueOffset
+int dataType
+this.offset = valueOffset;
+return 0;
+if(readBoolean()) return 0;
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+return readBoolean() ? 1 : 0;
+case SQLTokenizer.BINARY:
+case SQLTokenizer.VARBINARY:
+
+-------- New Clone Class -------------
+int valueOffset
+int dataType
+this.offset = valueOffset;
+return 0;
+if(readBoolean()) return 0;
+case SQLTokenizer.BIT:
+case SQLTokenizer.BOOLEAN:
+
+-------- New Clone Class -------------
+case SQLTokenizer.NUMERIC:
+case SQLTokenizer.DECIMAL:
+return readNumeric();
+case SQLTokenizer.CHAR:
+case SQLTokenizer.NCHAR:
+case SQLTokenizer.VARCHAR:
+case SQLTokenizer.NVARCHAR:
+
+-------- New Clone Class -------------
+value = Integer.parseInt(token.getName(sql) );
+{
+						value = Integer.parseInt(token.getName(sql) );
+					}
+Exception e
+throw createSyntaxError(token, MISSING_NUMBERVALUE );
+{
+						throw createSyntaxError(token, MISSING_NUMBERVALUE );
+					}
+catch(Exception e){
+						throw createSyntaxError(token, MISSING_NUMBERVALUE );
+					}
+try{
+						value = Integer.parseInt(token.getName(sql) );
+					}catch(Exception e){
+						throw createSyntaxError(token, MISSING_NUMBERVALUE );
+					}
+
+-------- New Clone Class -------------
+buf.append(':');
+formatNumber( details.minute, 2, buf );
+buf.append(':');
+formatNumber( details.second, 2, buf );
+buf.append(':');
+formatMillis( details.millis, buf );
+
+-------- New Clone Class -------------
+break;
+case SQLTokenizer.BIGINT:
+case SQLTokenizer.DATE:
+case SQLTokenizer.TIME:
+case SQLTokenizer.TIMESTAMP:
+case SQLTokenizer.SMALLDATETIME:
+case SQLTokenizer.MONEY:
+case SQLTokenizer.SMALLMONEY:
+
+-------- New Clone Class -------------
+String tableName = tables.get(t);
+TableView tab = getTableView( con, tableName);
+continue;
+if(!(tab instanceof Table)) continue;
+IndexDescriptions indexes = ((Table)tab).indexes;
+IndexDescription index = indexes.get(i);
+if(!(tab instanceof Table)) continue;
+
+-------- New Clone Class -------------
+case OR:
+case AND:
+case NOT:
+case LIKE:
+case ISNULL:
+case ISNOTNULL:
+
+-------- New Clone Class -------------
+Thread thread = (Thread)threadList.get(i);
+thread.join(5000);
+{
+            Thread thread = (Thread)threadList.get(i);
+            thread.join(5000);
+        }
+// wait until all threads are finish
+        for(int i = 0; i < threadList.size(); i++){
+            Thread thread = (Thread)threadList.get(i);
+            thread.join(5000);
+        }
+throw throwable;
+{
+            throw throwable;
+        }
+// throw the exception if one occur
+        if(throwable != null){
+            throw throwable;
+        }
+
+-------- New Clone Class -------------
+return (int)value;
+{
+		return (int)value;
+	}
+@Override
+    public int intValue() {
+		return (int)value;
+	}
+return value;
+{
+		return value;
+	}
+@Override
+    public long longValue() {
+		return value;
+	}
+return String.valueOf(value);
+{
+	    return String.valueOf(value);
+	}
+@Override
+    public String toString(){
+	    return String.valueOf(value);
+	}
+return new Long(value);
+{
+        return new Long(value);
+    }
+public Object getImmutableObject(){
+        return new Long(value);
+    }
+
+-------- New Clone Class -------------
+afterLast();
+return previous();
+{
+		afterLast();
+		return previous();
+	}
+boolean last() throws Exception{
+		afterLast();
+		return previous();
+	}
+return false;
+{return false;}
+
+-------- New Clone Class -------------
+
+-------- New Clone Class -------------
+con.createStatement().execute("Drop Table transactions");
+{
+				con.createStatement().execute("Drop Table transactions");
+			}
+Throwable e
+e.printStackTrace();
+{
+            e.printStackTrace();
+        }
+catch(Throwable e){
+            e.printStackTrace();
+        }
+e.printStackTrace();
+
+-------- New Clone Class -------------
+byte[] bytes
+StringBuffer buf = new StringBuffer(bytes.length << 1);
+buf.append( digits[ (bytes[i] >> 4) & 0x0F ] );
+buf.append( digits[ (bytes[i]     ) & 0x0F ] );
+{
+            buf.append( digits[ (bytes[i] >> 4) & 0x0F ] );
+            buf.append( digits[ (bytes[i]     ) & 0x0F ] );
+        }
+for(int i=0; i<bytes.length; i++){
+            buf.append( digits[ (bytes[i] >> 4) & 0x0F ] );
+            buf.append( digits[ (bytes[i]     ) & 0x0F ] );
+        }
+return buf.toString();
+{
+        StringBuffer buf = new StringBuffer(bytes.length << 1);
+        for(int i=0; i<bytes.length; i++){
+            buf.append( digits[ (bytes[i] >> 4) & 0x0F ] );
+            buf.append( digits[ (bytes[i]     ) & 0x0F ] );
+        }
+        return buf.toString();
+    }
+static String bytes2hex( byte[] bytes ){
+        StringBuffer buf = new StringBuffer(bytes.length << 1);
+        for(int i=0; i<bytes.length; i++){
+            buf.append( digits[ (bytes[i] >> 4) & 0x0F ] );
+            buf.append( digits[ (bytes[i]     ) & 0x0F ] );
+        }
+        return buf.toString();
+    }
+
+-------- New Clone Class -------------
+return param1.isNull();
+{
+        return param1.isNull();
+    }
+boolean isNull() throws Exception {
+        return param1.isNull();
+    }
+return null;
+if(isNull()) return null;
+return getString().getBytes();
+{
+        if(isNull()) return null;
+        return getString().getBytes();
+	}
+final byte[] getBytes() throws Exception{
+        if(isNull()) return null;
+        return getString().getBytes();
+	}
+return null;
+if(isNull()) return null;
+
+-------- New Clone Class -------------
+return value;
+{
+		return value;
+	}
+@Override
+    public double doubleValue() {
+		return value;
+	}
+return value;
+{
+		return value;
+	}
+@Override
+    public float floatValue() {
+		return value;
+	}
+
+-------- New Clone Class -------------
