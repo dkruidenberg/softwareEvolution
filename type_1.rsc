@@ -21,7 +21,6 @@ voor elke clone class check if subset of the subtrees of one other clone classes
 
 TODOS:
 - Write clone classes to file
-- Fix bug where the blocks are bad for some reason
 - Change json parser with filename
 - HTML bedazzle
 - Create test suite
@@ -37,6 +36,9 @@ clone class, and example clones.
 module type_1
 
 import type_1_helpers;
+import text_functions;
+import ast_functions;
+
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import count_loc;
@@ -63,131 +65,33 @@ void countDuplication(loc location){
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Done3");
 
-	list[list[node]] clones_classes = collect_clones(mapping, node_blocks);
+	list[list[node]] clones_classes = collect_clones(mapping, node_blocks, nodeToLoc);
 	json(clones_classes, nodeToLoc);
 }
 
-
-void json(list[list[node]]  clones_classes, map[node, list[loc]] nodeToLoc){
-	list[list[loc]] dupl = [];
-	for(clone<-clones_classes){
-		if(size(clone) == 0){
-			continue;
-		}
-		list[list[loc]] locations = [];
-		for(l <- clone){
-			locations += [nodeToLoc[l]];
-		}
-		dupl += [findfiles(locations)];
-		
-	}
-	map[loc,list[loc]] result = createMap(dupl);
-	writeJSON(result);	
-}
-str getText(list[node] block, map[node, list[loc]] nodeToLoc){
-	str result = "";
-	for(b<-block){
-		list[str] lines = readFileLines(nodeToLoc[b][0]);
-		for(line <- lines){
-			result += line + "\n";
-		}
-	}
-	return result;
-}
-
-
-
-void writeJSON(map[loc,list[loc]] input){
-	str result = "[";
-	int counterOuter = 1;
-	int sizeOuter = size(input);
-	for(l<-input){
-		list[str] lines = [];
-		lines += l.path +":" + "<l.begin.line>";
-		
-		result += "\n{\"name\":";
-		result += "\"" + l.path + "\", ";
-
-		result += "\"imports\":[";
-		int counter = 1;
-		limit = size(input[l]);
-		str tmpString = "";
-		for(matches <- input[l]){
-			lines += matches.path +":" + "<matches.begin.line>";
-			str tmpresult = "\"" + matches.path + "\"";
-			result += tmpresult;
-			if(counter < limit){
-				result += ", ";
-			}
-			
-			tmpString += "\n{\"name\":" + tmpresult  + " , \"imports\":[], \"source\": []}";
-			if(counter < limit){
-				tmpString += ", ";
-			}
-			counter += 1;
-		}
-		
-
-		result += "],\"source\": " + toString(lines) +"},";
-		result += tmpString;
-		if(counterOuter<sizeOuter){
-			result += ",";
-		}
-		counterOuter += 1;
-	}
-	result += "\n]";	
-	writeFile(|project://SoftwareEvolution/src/readme.json|,result);
-}
-
-list[loc] findfiles(list[list[loc]] locations){
-	list[loc] result = [];
-	
-	for(l <- locations[0]){
-		bool tmp = true;
-		counter = 1;
-		for(x <- drop(1,locations)){
-			if(!any(loc n <- x, (l.begin.line + counter) == n.begin.line)){
-				tmp = false;
-			}
-			counter += 1;
-		}
-		if(tmp){
-			result += l;
-		}
-	}
-	return result;
-}
-map[loc,list[loc]] createMap(list[list[loc]] lst){
-	map[loc,list[loc]] result = ();
-	iprint(lst);
-	for(l <- lst){
-		println(l);
-		if(size(l)>0){
-			loc key = l[0];
-			list[loc] rem = drop(1,l);
-	
-			result[key] = rem;
-		}
-	}
-	return result;
-}
-
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
-public list[list[node]] collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
+public list[list[node]] collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block,  map[node, list[loc]] nodeToLoc){
 	list[int] node_indices = sort([*n |n<-range(mapping), size(n)>1]);
 	println(size(node_indices));
 	list[list[int]] grouped_list = groupIndices(node_indices);
-	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block, mapping);
+	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block, mapping, nodeToLoc);
 	return clone_classes;
 }
 
 // group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes
-public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping){
+public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping,  map[node, list[loc]] nodeToLoc){
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
 	list[list[node]] clone_classes = group_clones(clone_list);
 	list[list[node]] sumb_classes = subsumption(clone_list);
-	clone_classes += sumb_classes;
+	list[str] subtext = getTextBlocks(sumb_classes, nodeToLoc);
+	for(n <- subtext){
+		iprint(subtext);
+	}
+	//clone_classes += sumb_classes;
+	
 	clone_classes = toList(toSet(clone_classes));
+	list[str] subtext2 = getTextBlocks(clone_classes, nodeToLoc);
+	text(subtext2);
 	return clone_classes;
 }
 
@@ -305,22 +209,6 @@ list[list[list[node]]] group_listToCloneList(list[list[int]] grouped_list, list[
 
 }
 
-
-
-//Create blocks of size x
-public list[list[node]] createBlocks(list[node] code, int x){
-	list[list[node]] blocks = [[]];
-	int code_size = size(code);
-	//loop through every line and create a block of x starting from that index
-	if(code_size>=6){
-		for(int index <- [0 .. code_size - (x - 1)]){
-			list[node] new_block = slice(code, index, x);
-			blocks += [new_block];
-		}
-	}
-	return blocks;
-}
-
 // group all lines that are found to be clones and are subsequent in the AST
 public list[list[int]] groupIndices(list[int] node_indices){
 	list[list[int]] clone_classes = [];
@@ -345,102 +233,6 @@ public list[list[int]] groupIndices(list[int] node_indices){
 	return clone_classes;
 
 }
-
-
-
-tuple[list[node], map[node, list[loc]]] createCloneMappers(node ast){
-	list[node] node_list = [];
-	map[node, list[loc]] nodeToLoc = ();
-	visit(ast){
-		case node n:{
-			if(goodNode(n)){
-				loc l = getNodeLoc(n);
-				n = unsetRec(n);
-				if(l != |unknown:///|){
-					if(nodeToLoc[n]?){
-						nodeToLoc[n] += l;
-					}
-					else{
-						nodeToLoc[n] = [l];
-					}
-					loc tmp = changeLocZero(l);
-	
-					node_list += n;
-				}
-			}
-		}
-	}
-	
-	return <node_list, nodeToLoc>;
-}
-
-bool goodNode(node n){
-	if(Declaration d := n){
-		return true;
-	}
-	if(Statement s := n){
-		return true;
-	}
-	
-	return false;
-}
-
-
-public list[Declaration] walkFilesAST(loc a){
-	list[Declaration] ast = [];
-	for (entry <- listEntries(a)){
-		if (/\.java/ := entry){
-			ast += createAstFromFile(a + entry, true);
-		}
-		elseif (isDirectory(a+entry))
-			ast += walkFilesAST(a+entry);
-	}
-	return ast;
-}
-
-tuple[list[list[node]], map[node, list[loc]]] getNodeBlocks(loc location){
-	list[Declaration] ast = walkFilesAST(location);
-	println("Done1");
-	list[list[node]] node_blocks = [];
-	map[node, list[loc]] nodeToLoc = ();
-	for(a <- ast){
-		tuple[list[node], map[node, list[loc]]] result = createCloneMappers(a);
-		list[node] node_list = result[0];
-		for(res <- result[1]){
-			if(nodeToLoc[res]?){
-				nodeToLoc[res] += result[1][res];
-			}
-			else{
-				nodeToLoc[res] = result[1][res];
-			}
-		}
-		node_blocks += createBlocks(node_list, 6);
-	}
-	println("Created Blocks");
-	return <node_blocks, nodeToLoc>;
-}
-
-void printNodes(list[list[node]] node_blocks){
-	for(n <- node_blocks){
-		println("New Block");
-		println(size(n));
-		for(i <- n){
-			iprint(i);
-		}
-		println("----------------------");
-	
-	}
-
-}
-
-
-
-
-
-
-
-
-
 
 
 
