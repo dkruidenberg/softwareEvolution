@@ -162,6 +162,7 @@ map[loc,list[loc]] createMap(list[list[loc]] lst){
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
 public void collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
 	list[int] node_indices = sort([*n |n<-range(mapping), size(n)>1]);
+	println(size(node_indices));
 	list[list[int]] grouped_list = groupIndices(node_indices);
 	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block, mapping);
 }
@@ -169,9 +170,9 @@ public void collect_clones(map[list[node], set[int]] mapping, list[list[node]] n
 // group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes
 public list[list[node]] getCloneClasses(list[list[int]] grouped_list, list[list[node]] node_blocks, map[list[node], set[int]] mapping){
 	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks);
-	list[list[node]] clone_classes = []; //group_clones(clone_list);
-	//text(clone_classes);
-	clone_classes += subsumption(clone_list);
+	list[list[node]] clone_classes = group_clones(clone_list);
+	list[list[node]] sumb_classes = subsumption(clone_list);
+	clone_classes += sumb_classes;
 	clone_classes = toList(toSet(clone_classes));
 	return clone_classes;
 }
@@ -253,7 +254,6 @@ list[list[node]] subsumption(list[list[list[node]]] clone_list){
 // Takes a list of nodes like [[a, b, c], [b,c,d]] and makes it into 1 overall clone: [a, b, c, d]
 list[list[node]] group_clones(list[list[list[node]]] clone_list){
 	clone_list = [n |n<-clone_list,size(n)!=0];
-	text(clone_list);
 	list[list[node]] result = [];
 	// for every clone, collect the nodes into buckets and add it to the result
 	for(clone_block <- clone_list){
@@ -275,6 +275,7 @@ list[list[node]] group_clones(list[list[list[node]]] clone_list){
 }
 
 // Take a list of positions and put the clones in them
+// We also remove duplicate clones here (so the subsumption will go faster, since we only need the overall clone classes
 list[list[list[node]]] group_listToCloneList(list[list[int]] grouped_list, list[list[node]] node_blocks){
 	list[list[list[node]]] result = [];
 	for(n <- grouped_list){
