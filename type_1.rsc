@@ -54,53 +54,19 @@ void type_1_statistics(loc location){
 	countDuplication(location);
 }
 
-public list[Declaration] walkFiles(loc a){
-	list[Declaration] ast = [];
-	for (entry <- listEntries(a)){
-		if (/\.java/ := entry){
-			ast += createAstFromFile(a + entry, true);
-		}
-		elseif (isDirectory(a+entry))
-			ast += walkFiles(a+entry);
-	}
-	return ast;
-}
-
 //main function
 void countDuplication(loc location){
-	list[Declaration] ast = walkFiles(|project://smallsql0.21_src|);
-	println("Done1");
-	list[list[node]] node_blocks = [];
-	map[node, list[loc]] nodeToLoc = ();
-	map[loc, node] locToNode = ();
-	for(a <- ast){
-		tuple[list[node], map[node, list[loc]], map[loc, node]] result = createCloneMappers(a);
-		list[node] node_list = result[0];
-		for(res <- result[1]){
-			if(nodeToLoc[res]?){
-				nodeToLoc[res] += result[1][res];
-			}
-			else{
-				nodeToLoc[res] = result[1][res];
-			}
-		}
-		for(res <- result[2]){
-			if(locToNode[res]?){
-				locToNode[res] += result[2][res];
-			}
-			else{
-				locToNode[res] = result[2][res];
-			}
-		}
-		node_blocks += createBlocks(node_list, 6);
-	}
-	println("Done2");
+	tuple[list[list[node]], map[node, list[loc]]] result = getNodeBlocks(location);
+	list[list[node]] node_blocks = result[0];
+	map[node, list[loc]] nodeToLoc = result[1];
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Done3");
 	//json(mapping, nodeToLoc);
 	collect_clones(mapping, node_blocks);
 }
+
+
 void json(map[list[node], set[int]] mapping, map[node, list[loc]] nodeToLoc){
 	list[list[loc]] dupl = [];
 	for(k<-mapping){
@@ -367,10 +333,9 @@ public list[list[int]] groupIndices(list[int] node_indices){
 
 
 
-tuple[list[node], map[node, list[loc]], map[loc, node]] createCloneMappers(node ast){
+tuple[list[node], map[node, list[loc]]] createCloneMappers(node ast){
 	list[node] node_list = [];
 	map[node, list[loc]] nodeToLoc = ();
-	map[loc, node] locToNode = ();
 	visit(ast){
 		case node n:{
 			if(goodNode(n)){
@@ -385,15 +350,13 @@ tuple[list[node], map[node, list[loc]], map[loc, node]] createCloneMappers(node 
 					}
 					loc tmp = changeLocZero(l);
 	
-					locToNode[tmp] = n;
-	
 					node_list += n;
 				}
 			}
 		}
 	}
 	
-	return <node_list, nodeToLoc, locToNode>;
+	return <node_list, nodeToLoc>;
 }
 
 bool goodNode(node n){
@@ -406,6 +369,55 @@ bool goodNode(node n){
 	
 	return false;
 }
+
+
+public list[Declaration] walkFilesAST(loc a){
+	list[Declaration] ast = [];
+	for (entry <- listEntries(a)){
+		if (/\.java/ := entry){
+			ast += createAstFromFile(a + entry, true);
+		}
+		elseif (isDirectory(a+entry))
+			ast += walkFilesAST(a+entry);
+	}
+	return ast;
+}
+
+tuple[list[list[node]], map[node, list[loc]]] getNodeBlocks(loc location){
+	list[Declaration] ast = walkFilesAST(location);
+	println("Done1");
+	list[list[node]] node_blocks = [];
+	map[node, list[loc]] nodeToLoc = ();
+	for(a <- ast){
+		tuple[list[node], map[node, list[loc]]] result = createCloneMappers(a);
+		list[node] node_list = result[0];
+		for(res <- result[1]){
+			if(nodeToLoc[res]?){
+				nodeToLoc[res] += result[1][res];
+			}
+			else{
+				nodeToLoc[res] = result[1][res];
+			}
+		}
+		node_blocks += createBlocks(node_list, 6);
+	}
+	println("Created Blocks");
+	return <node_blocks, nodeToLoc>;
+}
+
+void printNodes(list[list[node]] node_blocks){
+	for(n <- node_blocks){
+		println("New Block");
+		println(size(n));
+		for(i <- n){
+			iprint(i);
+		}
+		println("----------------------");
+	
+	}
+
+}
+
 
 
 

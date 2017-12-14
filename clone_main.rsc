@@ -8,7 +8,7 @@ import IO;
 void main(){
 	loc location = |project://smallsql0.21_src|;
 	loc location2 = |project://SoftwareEvolution|;
-	type_1_statistics(location2);
+	type_1_statistics(location);
 
 }
 
