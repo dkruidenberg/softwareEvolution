@@ -64,16 +64,18 @@ void countDuplication(loc location){
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Created Mapping");
 
-	list[list[node]] clones_classes = collect_clones(mapping, node_blocks, loc_blocks);
-	//json(clones_classes, nodeToLoc);
+	tuple[list[list[node]],list[list[int]]] result_clones = collect_clones(mapping, node_blocks);
+	list[list[node]] clones_classes = result_clones[0];
+	list[list[int]] grouped_list = result_clones[1];
+	json(grouped_list, loc_blocks);
 }
 
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
-public list[list[node]] collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
+public tuple[list[list[node]],list[list[int]]] collect_clones(map[list[node], set[int]] mapping, list[list[node]] node_block){
 	list[int] node_indices = sort([*n |n<-range(mapping), size(n)>1]);
 	list[list[int]] grouped_list = groupIndices(node_indices);
 	list[list[node]] clone_classes = getCloneClasses(grouped_list, node_block);
-	return clone_classes;
+	return <clone_classes,grouped_list>;
 }
 
 // group the blocks per clone into 1 clone class and add the subsumption clone classes to the result to get all clone classes

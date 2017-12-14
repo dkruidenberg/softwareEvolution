@@ -14,21 +14,38 @@ import Type;
 import Node;
 import util::ValueUI;
 
-void json(list[list[node]]  clones_classes, map[node, list[loc]] nodeToLoc){
-	list[list[loc]] dupl = [];
-	for(clone<-clones_classes){
-		if(size(clone) == 0){
-			continue;
+void json(list[list[int]] group_list, list[list[loc]] loc_blocks){
+	str result = "[";
+	int counterOuter = 1;
+	int sizeOuter = size(group_list);
+	
+	for(g <- group_list){
+		int start_index = g[0];
+		int end_index = g[size(g)-1];
+		loc start_location = loc_blocks[start_index][0];
+		loc end_location = loc_blocks[end_index][size(loc_blocks[end_index])-1];
+		iprint(start_location);
+		iprint(end_location);
+		
+		result += "\n{\"name\":";
+		result += "\"" + start_location.path + "\", ";
+		
+		result += "\"imports\":[";
+		int counter = 1;
+		int limit = size(loc_blocks[g[0]]);
+		for(entry <- loc_blocks[g[0]]){
+			result += "\"" + entry.path + "\<" + "<entry.begin.line>" + "," + "<entry.end.line>" + "\>\"";
 		}
-		list[list[loc]] locations = [];
-		for(l <- clone){
-			locations += [nodeToLoc[l]];
-		}
-		dupl += [findfiles(locations)];
+		break;
 		
 	}
-	map[loc,list[loc]] result = createMap(dupl);
-	writeJSON(result);	
+	iprint(result);
+	
+	
+	
+	
+
+	
 }
 
 list[str] getTextBlocks(list[list[node]] node_blocks, map[node, list[loc]] nodeToLoc){
