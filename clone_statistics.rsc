@@ -24,6 +24,7 @@ void percentageAstClones(list[list[int]] grouped_list, int total_size, int min_c
 		}
 	}
 	println("Percentage duplicate duplicate AST nodes <clone_size / toReal(total_size) * 100>");
+	writeFile(|project://SoftwareEvolution/src/clone_percentage.text|, (clone_size / toReal(total_size) * 100));
 }
 
 void createStatistics(list[list[node]] sumb_classes, list[list[node]] clone_classes){

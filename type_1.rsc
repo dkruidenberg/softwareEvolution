@@ -44,7 +44,7 @@ import Type;
 import Node;
 import util::ValueUI;
 
-
+// main function, also tells you what you are doing
 void type_1_statistics(loc location, int min_clone_size, bool type1){
 	if(type1){
 		println("Searching for type 1 clones...");
@@ -55,22 +55,26 @@ void type_1_statistics(loc location, int min_clone_size, bool type1){
 	countDuplication(location, min_clone_size, type1);
 }
 
-//main function
-void countDuplication(loc location, int min_clone_size, bool type1){
+// Get the node blocks with their location, detect the clones, group them, execute subsumption,
+// print the statistics, and return the clone classes
+list[list[node]] countDuplication(loc location, int min_clone_size, bool type1){
 	tuple[list[list[node]],list[list[loc]], int, map[node, list[loc]]] result = getNodeBlocks(location, min_clone_size, type1);
 	list[list[node]] node_blocks = result[0];
 	map[node, list[loc]] nodeToLoc = result[3];
 	int total_size = result[2];
 	list[list[loc]] loc_blocks = result[1];
+	// Detecting clones
 	map[list[node], set[int]] mapping = toMap(zip(node_blocks, index(node_blocks)));
 	mapping = (n : mapping[n] | n <- mapping, size(mapping[n]) > 1);
 	println("Created Mapping");
 
+	// get all the overall clone classes
 	tuple[list[list[node]],list[list[int]]] result_clones = collect_clones(mapping, node_blocks);
 	list[list[node]] clone_classes = result_clones[0];
 	list[list[int]] grouped_list = result_clones[1];
 	percentageAstClones(grouped_list, total_size, min_clone_size);
 	cloneClassesToFile(clone_classes, nodeToLoc);
+	return clone_classes;
 	
 	//json(grouped_list, loc_blocks);
 }
