@@ -72,11 +72,17 @@ list[list[node]] countDuplication(loc location, int min_clone_size, bool type1){
 	tuple[list[list[node]],list[list[int]]] result_clones = collect_clones(mapping, node_blocks);
 	list[list[node]] clone_classes = result_clones[0];
 	list[list[int]] grouped_list = result_clones[1];
+
+	
+	list[list[list[node]]] clone_list = group_listToCloneList(grouped_list, node_blocks); 
+	list[list[list[loc]]] location_list = getLocation(grouped_list, node_blocks,loc_blocks);
+	json(clone_list, location_list, nodeToLoc);
+
 	percentageAstClones(grouped_list, total_size, min_clone_size);
 	cloneClassesToFile(clone_classes, nodeToLoc);
 	return clone_classes;
 	
-	//json(grouped_list, loc_blocks);
+
 }
 
 // group all indices where clones occur to find clones larger than the specified size (we chose 6)
@@ -210,8 +216,32 @@ list[list[list[node]]] group_listToCloneList(list[list[int]] grouped_list, list[
 		}
 	}
 	return result;
-
 }
+
+list[list[list[loc]]] getLocation(list[list[int]] grouped_list, list[list[node]] node_blocks, list[list[loc]] loc_blocks){
+	list[list[list[node]]] result = [];
+	list[list[list[loc]]] result_loc = [];
+	for(n <- grouped_list){
+		list[list[node]] cur_bucket = [];
+		set[loc] set_loc = {};
+		for(i <- n){
+			cur_bucket += [node_blocks[i]];
+			set_loc += toSet(loc_blocks[i]);
+		}
+		if(!(cur_bucket in result)){
+			result += [cur_bucket];
+			result_loc += [[toList(set_loc)]];
+		}
+		else{
+			int index = indexOf(result, cur_bucket);
+			result_loc[index] += [toList(set_loc)];
+		}
+	}
+	return result_loc;
+}
+
+
+
 
 // group all lines that are found to be clones and are subsequent in the AST
 public list[list[int]] groupIndices(list[int] node_indices){
@@ -225,8 +255,7 @@ public list[list[int]] groupIndices(list[int] node_indices){
 			while(cur_index + 1 in node_indices){
 				cur_index = cur_index + 1;
 				cur_bucket += cur_index;
-				skip_counter += 1;
-				
+				skip_counter += 1;	
 			}
 			clone_classes += [cur_bucket];
 		}
