@@ -75,7 +75,7 @@ void json(list[list[list[node]]] clone_list, list[list[list[loc]]] location_list
 		
 	}
 	result += "]";
-	writeFile(|project://SoftwareEvolution/src/readme.json|,result);
+	writeFile(|project://SoftwareEvolution/src/data.json|,result);
 	return;
 	
 }
